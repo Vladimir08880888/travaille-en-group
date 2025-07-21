@@ -1,213 +1,178 @@
-<!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="60+ интересных фактов о животных 2, расширенный квиз и забавные тесты. Делись результатами!">
-    <meta name="keywords" content="факты о животных, интересные факты, квиз о животных, тест про животных">
-    <title>Super Facts о Животных - Серия 2</title>
+    <meta name="description" content="60+ interesting animal facts 2, expanded quiz, and fun tests. Share your results!">
+    <meta name="keywords" content="animal facts, interesting facts, animal quiz, animal test">
+    <title>Super Facts about Animals - Series 2</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background: #ffffff; color: #1e3932; line-height: 1.6; }
-        header { background: linear-gradient(to bottom, #006241, #004d33); color: white; padding: 2rem 1rem; text-align: center; animation: fadeIn 1s; }
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1e3932;
+            --header-bg: linear-gradient(to bottom, #006241, #004d33);
+            --header-text: white;
+            --fact-bg: #f7f7f7;
+            --quiz-bg: #f7f7f7;
+            --option-bg: #ffffff;
+            --option-border: #d9d9d9;
+            --option-hover: #e6f4ea;
+            --selected-bg: #006241;
+            --selected-text: white;
+            --button-bg: #006241;
+            --button-text: white;
+            --button-hover-bg: #004d33;
+            --ad-bg: #f7f7f7;
+            --footer-bg: #1e3932;
+            --footer-text: white;
+            --progress-bg: #d9d9d9;
+            --progress-bar: #006241;
+            --input-border: #d9d9d9;
+            --lang-bg: #006241;
+            --lang-text: white;
+        }
+
+        body.dark {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --header-bg: linear-gradient(to bottom, #004d33, #002b1f);
+            --header-text: #e0e0e0;
+            --fact-bg: #1e1e1e;
+            --quiz-bg: #1e1e1e;
+            --option-bg: #2c2c2c;
+            --option-border: #444444;
+            --option-hover: #3a3a3a;
+            --selected-bg: #004d33;
+            --selected-text: #e0e0e0;
+            --button-bg: #004d33;
+            --button-text: #e0e0e0;
+            --button-hover-bg: #006241;
+            --ad-bg: #1e1e1e;
+            --footer-bg: #0a0a0a;
+            --footer-text: #e0e0e0;
+            --progress-bg: #444444;
+            --progress-bar: #004d33;
+            --input-border: #444444;
+            --lang-bg: #004d33;
+            --lang-text: #e0e0e0;
+        }
+
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+        header { background: var(--header-bg); color: var(--header-text); padding: 2rem 1rem; text-align: center; animation: fadeIn 1s; }
         h1, h2 { font-weight: 600; margin: 0.5rem 0; }
         .container { max-width: 1200px; margin: 0 auto; padding: 1rem; }
         .fact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
-        .fact { background: #f7f7f7; border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; animation: slideIn 0.5s forwards; opacity: 0; }
+        .fact { background: var(--fact-bg); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; animation: slideIn 0.5s forwards; opacity: 0; }
         .fact:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
-        .quiz-section { margin: 2rem 0; background: #f7f7f7; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); animation: fadeInUp 0.8s; }
+        .quiz-section { margin: 2rem 0; background: var(--quiz-bg); border-radius: 12px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); animation: fadeInUp 0.8s; }
         .quiz-question { margin-bottom: 1.5rem; animation: bounceIn 0.5s; }
         .quiz-options { display: flex; flex-direction: column; gap: 0.5rem; }
-        .quiz-option { background: #ffffff; border: 1px solid #d9d9d9; border-radius: 8px; padding: 1rem; cursor: pointer; transition: background 0.3s, transform 0.3s; }
-        .quiz-option:hover { background: #e6f4ea; transform: scale(1.02); }
-        .quiz-option.selected { background: #006241; color: white; animation: pulse 0.5s; }
-        #quiz-progress { height: 5px; background: #d9d9d9; margin-bottom: 1rem; }
-        #quiz-progress-bar { height: 100%; background: #006241; width: 0; transition: width 0.3s ease-in-out; }
-        button { background: #006241; color: white; border: none; padding: 0.75rem 1.5rem; cursor: pointer; border-radius: 50px; font-weight: 600; transition: background 0.3s, transform 0.3s; }
-        button:hover { background: #004d33; transform: scale(1.05); }
-        .ad { background: #f7f7f7; padding: 1rem; text-align: center; margin: 1rem 0; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .quiz-option { background: var(--option-bg); border: 1px solid var(--option-border); border-radius: 8px; padding: 1rem; cursor: pointer; transition: background 0.3s, transform 0.3s; }
+        .quiz-option:hover { background: var(--option-hover); transform: scale(1.02); }
+        .quiz-option.selected { background: var(--selected-bg); color: var(--selected-text); animation: pulse 0.5s; }
+        #quiz-progress { height: 5px; background: var(--progress-bg); margin-bottom: 1rem; }
+        #quiz-progress-bar { height: 100%; background: var(--progress-bar); width: 0; transition: width 0.3s ease-in-out; }
+        button { background: var(--button-bg); color: var(--button-text); border: none; padding: 0.75rem 1.5rem; cursor: pointer; border-radius: 50px; font-weight: 600; transition: background 0.3s, transform 0.3s; }
+        button:hover { background: var(--button-hover-bg); transform: scale(1.05); }
+        .ad { background: var(--ad-bg); padding: 1rem; text-align: center; margin: 1rem 0; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .share, .subscribe { text-align: center; margin: 2rem 0; animation: fadeIn 1s; }
-        input { padding: 0.75rem; border-radius: 50px; border: 1px solid #d9d9d9; width: 300px; max-width: 100%; }
-        footer { background: #1e3932; color: white; text-align: center; padding: 1rem; }
-        .lang-select { margin: 1rem auto; display: block; padding: 0.5rem; border-radius: 50px; background: #006241; color: white; border: none; }
+        input { padding: 0.75rem; border-radius: 50px; border: 1px solid var(--input-border); width: 300px; max-width: 100%; }
+        footer { background: var(--footer-bg); color: var(--footer-text); text-align: center; padding: 1rem; }
+        .lang-select { margin: 1rem auto; display: block; padding: 0.5rem; border-radius: 50px; background: var(--lang-bg); color: var(--lang-text); border: none; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes bounceIn { from { transform: scale(0.9); } to { transform: scale(1); } }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         @media (max-width: 768px) { .fact-grid { grid-template-columns: 1fr; } }
+        #quiz-timer { font-size: 1.5rem; text-align: center; margin-bottom: 1rem; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        table th, table td { border: 1px solid var(--option-border); padding: 0.5rem; text-align: left; }
+        table th { background: var(--option-hover); }
     </style>
 </head>
 <body>
     <header>
-        <h1 data-key="title">Super Facts о Животных - Серия 2</h1>
-        <p data-key="subtitle">60+ фактов, расширенный квиз и тесты в стиле современного меню!</p>
+        <h1 data-key="title">Super Facts about Animals - Series 2</h1>
+        <p data-key="subtitle">60+ facts, expanded quiz and tests.</p>
         <select class="lang-select" onchange="changeLanguage(this.value)">
-            <option value="ru">Русский</option>
             <option value="en">English</option>
+            <option value="ru">Русский</option>
             <option value="fr">Français</option>
+            <option value="it">Italiano</option>
+            <option value="es">Español</option>
         </select>
+        <button id="theme-toggle" data-key="themeToggle">Change Brightness</button>
     </header>
 
     <div class="container">
-        <!-- Рекламный баннер -->
+        <!-- Ad banner -->
         <div class="ad">
-            <!-- Вставьте код Google Adsense здесь -->
+            <!-- Insert Google Adsense code here -->
         </div>
 
         <section id="facts">
-            <h2 data-key="factsHeader">Интересные Факты</h2>
-            <button onclick="showMoreFacts()" data-key="moreFactsBtn">Показать больше фактов</button>
+            <h2 data-key="factsHeader">Interesting Facts</h2>
             <div class="fact-grid" id="factGrid">
-                <!-- Факты добавляются через JS -->
+                <!-- Facts added via JS -->
             </div>
+            <button onclick="showMoreFacts()" data-key="moreFactsBtn">Show More Facts</button>
         </section>
 
-        <!-- Расширенный Квиз -->
+        <!-- Expanded Quiz -->
         <section class="quiz-section">
-            <h2 data-key="quizHeader">Расширенный Квиз: Проверь Знания о Животных!</h2>
-            <div id="quiz-progress"><div id="quiz-progress-bar"></div></div>
-            <div id="quiz-question" class="quiz-question"></div>
-            <div id="quiz-options" class="quiz-options"></div>
-            <button id="next-btn" onclick="nextQuestion()" style="display:none;" data-key="nextBtn">Далее</button>
+            <h2 data-key="quizHeader">Expanded Quiz: Test Your Animal Knowledge!</h2>
+            <button id="start-quiz-btn" onclick="startQuiz()" data-key="startQuizBtn">Start Quiz</button>
+            <div id="quiz-progress" style="display:none;"><div id="quiz-progress-bar"></div></div>
+            <div id="quiz-question" class="quiz-question" style="display:none;"></div>
+            <div id="quiz-timer" style="display:none;"></div>
+            <div id="quiz-options" class="quiz-options" style="display:none;"></div>
+            <button id="next-btn" onclick="nextQuestion()" style="display:none;" data-key="nextBtn">Next</button>
             <div id="quiz-result" style="display:none; text-align:center; margin-top:2rem;"></div>
         </section>
 
-        <!-- Реклама -->
+        <!-- Ad -->
         <div class="ad">
-            <!-- Вставьте код Adsense здесь -->
+            <!-- Insert Adsense code here -->
         </div>
 
         <div class="share">
-            <h3 data-key="shareHeader">Поделись результатом!</h3>
-            <button onclick="shareOnSocial('WhatsApp')">В WhatsApp</button>
-            <button onclick="shareOnSocial('Telegram')">В Telegram</button>
+            <h3 data-key="shareHeader">Share Your Result!</h3>
+            <button data-key="shareWhatsApp" onclick="shareOnSocial('WhatsApp')">On WhatsApp</button>
+            <button data-key="shareTelegram" onclick="shareOnSocial('Telegram')">On Telegram</button>
         </div>
 
         <div class="subscribe">
-            <h3 data-key="subscribeHeader">Подпишись на еженедельные факты!</h3>
-            <input type="email" data-key="emailPlaceholder" placeholder="Ваш email">
-            <button onclick="subscribe()" data-key="subscribeBtn">Подписаться</button>
+            <h3 data-key="subscribeHeader">Subscribe to Weekly Facts!</h3>
+            <input type="email" id="subscribe-email" data-key="emailPlaceholder" placeholder="Your email">
+            <button onclick="subscribe()" data-key="subscribeBtn">Subscribe</button>
         </div>
     </div>
 
     <footer>
-        © 2025 SuperFacts. 
+        © 2025 SuperFacts. <div>info@superfacts.fr</div>
     </footer>
 
     <script>
         const translations = {
-            ru: {
-                title: 'Super Facts о Животных - Серия 2',
-                subtitle: '60+ фактов, расширенный квиз и тесты.',
-                factsHeader: 'Интересные Факты',
-                moreFactsBtn: 'Показать больше фактов',
-                quizHeader: 'Расширенный Квиз: Проверь Знания о Животных!',
-                nextBtn: 'Далее',
-                shareHeader: 'Поделись результатом!',
-                subscribeHeader: 'Подпишись на еженедельные факты!',
-                emailPlaceholder: 'Ваш email',
-                subscribeBtn: 'Подписаться',
-                subscribeAlert: 'Подписка оформлена!',
-                facts: [
-                    "1. Группа фламинго называется flamboyance.",
-                    "2. У жирафов такое же количество шейных позвонков, как у людей: семь.",
-                    "3. Осьминоги могут протискиваться через любое отверстие больше их клюва.",
-                    "4. Улитка может спать три года.",
-                    "5. Мех белых медведей на самом деле прозрачный, а кожа черная.",
-                    "6. Бабочки пробуют вкус ногами.",
-                    "7. Слоны - единственные млекопитающие, которые не могут прыгать.",
-                    "8. Рог носорога сделан из волос.",
-                    "9. Пингвины могут пить соленую воду благодаря специальной железе.",
-                    "10. Отпечатки пальцев коал почти идентичны человеческим.",
-                    "11. Крокодил не может высунуть язык.",
-                    "12. Акулы могут обнаруживать электричество.",
-                    "13. Сердце креветки находится в ее голове.",
-                    "14. У сов нет глазных яблок; у них глазные трубки.",
-                    "15. Группа носорогов называется crash.",
-                    "16. У кошек более 20 мышц, контролирующих уши.",
-                    "17. Дельфины спят с одним открытым глазом.",
-                    "18. Единственное млекопитающее, способное к настоящему полету, - летучая мышь.",
-                    "19. У муравьев нет легких; они дышат через спиракли.",
-                    "20. Новорожденный кенгуру размером с фасолину.",
-                    "21. Морские выдры имеют самый густой мех среди всех животных.",
-                    "22. Колибри могут весить меньше копейки.",
-                    "23. Гигантский кальмар имеет самые большие глаза в мире.",
-                    "24. У тигров полосатая кожа, а не только полосатый мех.",
-                    "25. Группа ворон называется murder.",
-                    "26. Медузы состоят на 95% из воды.",
-                    "27. Гепард - единственная кошка, которая не может втягивать когти.",
-                    "28. Лягушки не могут глотать с открытыми глазами.",
-                    "29. Сердце синего кита размером с маленький автомобиль.",
-                    "30. У пауков голубая кровь.",
-                    "31. Коровы имеют лучших друзей и стрессуют при разлуке.",
-                    "32. У осьминога может быть до 2000 присосок.",
-                    "33. Креветка-богомол может бить с силой пули.",
-                    "34. Пингвины предлагают брак с камешком.",
-                    "35. Группа сов называется parliament.",
-                    "36. Крысы могут смеяться от щекотки.",
-                    "37. Бивень нарвала на самом деле зуб.",
-                    "38. Фламинго могут есть только с перевернутой головой.",
-                    "39. Детеныш тупика называется puffling.",
-                    "40. Гиппопотамы производят розовое молоко.",
-                    "41. Лирохвост может имитировать любой услышанный звук.",
-                    "42. Морские коньки моногамны на всю жизнь.",
-                    "43. Группа дикобразов называется prickle.",
-                    "44. У омаров голубая кровь.",
-                    "45. Медузы Turritopsis dohrnii бессмертны.",
-                    "46. Волки имеют уникальные завывания, как отпечатки пальцев.",
-                    "47. Фламинго сгибают ноги в лодыжке, а не в колене.",
-                    "48. Самое медленное животное - трехпалый ленивец.",
-                    "49. Орлы видят в 5 раз дальше людей.",
-                    "50. Группа хорьков называется business.",
-                    "51. Кошки проводят 70% жизни во сне.",
-                    "52. Яд кубомедузы самый смертоносный.",
-                    "53. Жирафы спят только 20 минут в день.",
-                    "54. Акулы существуют дольше деревьев.",
-                    "55. Группа тигров называется streak.",
-                    "56. Пчелы могут летать выше Эвереста.",
-                    "57. Язык окапи достаточно длинный, чтобы чистить глаза.",
-                    "58. Камели имеют три века.",
-                    "59. Далматинцы рождаются без пятен.",
-                    "60. Серые гончие - самые быстрые собаки."
-                ],
-                quizQuestions: [
-                    { question: "Как называется группа кошек?", options: ["Прайд", "Клаудер", "Стадо"], correct: 1 },
-                    { question: "Какое животное имеет самый густой мех?", options: ["Белый медведь", "Морская выдра", "Арктическая лиса"], correct: 1 },
-                    { question: "Какой самая быстрая птица?", options: ["Сапсан", "Орел", "Колибри"], correct: 0 },
-                    { question: "Какое самое высокое животное?", options: ["Жираф", "Слон", "Носорог"], correct: 0 },
-                    { question: "Сколько ног у осьминога?", options: ["6", "8", "10"], correct: 1 },
-                    { question: "Какое животное известно как корабль пустыни?", options: ["Верблюд", "Лошадь", "Осел"], correct: 0 },
-                    { question: "Какое единственное млекопитающее может летать?", options: ["Летучая мышь", "Белка-летяга", "Птица"], correct: 0 },
-                    { question: "Какое животное может спать 3 года?", options: ["Улитка", "Медведь", "Коала"], correct: 0 },
-                    { question: "Какого цвета кожа белого медведя?", options: ["Белая", "Черная", "Прозрачная"], correct: 1 },
-                    { question: "Какое животное пробует вкус ногами?", options: ["Бабочка", "Змея", "Лягушка"], correct: 0 },
-                    { question: "Могут ли слоны прыгать?", options: ["Да", "Нет"], correct: 1 },
-                    { question: "Из чего сделан рог носорога?", options: ["Кость", "Волосы", "Камень"], correct: 1 },
-                    { question: "Могут ли пингвины пить соленую воду?", options: ["Да", "Нет"], correct: 0 },
-                    { question: "Похожи ли отпечатки пальцев коал на человеческие?", options: ["Да", "Нет"], correct: 0 },
-                    { question: "Может ли крокодил высунуть язык?", options: ["Да", "Нет"], correct: 1 },
-                    { question: "Какого цвета молоко гиппопотама?", options: ["Белое", "Розовое", "Зеленое"], correct: 1 },
-                    { question: "Как называется группа сов?", options: ["Парламент", "Стая", "Группа"], correct: 0 },
-                    { question: "Какая медуза бессмертна?", options: ["Turritopsis dohrnii", "Кубомедуза", "Обычная медуза"], correct: 0 },
-                    { question: "Какое самое медленное животное?", options: ["Ленивец", "Улитка", "Черепаха"], correct: 0 },
-                    { question: "Как называется группа тигров?", options: ["Полоска", "Стая", "Прайд"], correct: 0 }
-                ],
-                resultExcellent: 'Отлично! Вы эксперт по животным.',
-                resultGood: 'Хорошо, но можно лучше.',
-                resultTryAgain: 'Попробуйте снова!'
-            },
             en: {
                 title: 'Super Facts about Animals - Series 2',
                 subtitle: '60+ facts, expanded quiz and tests.',
                 factsHeader: 'Interesting Facts',
                 moreFactsBtn: 'Show More Facts',
                 quizHeader: 'Expanded Quiz: Test Your Animal Knowledge!',
+                startQuizBtn: 'Start Quiz',
                 nextBtn: 'Next',
+                restartQuizBtn: 'Restart Quiz',
                 shareHeader: 'Share Your Result!',
                 subscribeHeader: 'Subscribe to Weekly Facts!',
                 emailPlaceholder: 'Your email',
                 subscribeBtn: 'Subscribe',
                 subscribeAlert: 'Subscription successful!',
+                themeToggle: 'Change Brightness',
+                shareWhatsApp: 'On WhatsApp',
+                shareTelegram: 'On Telegram',
+                yourResult: 'Your result:',
+                outOf: 'out of',
                 facts: [
                     "1. A group of flamingos is called a flamboyance.",
                     "2. Giraffes have the same number of neck vertebrae as humans: seven.",
@@ -294,7 +259,130 @@
                 ],
                 resultExcellent: 'Excellent! You are an animal expert.',
                 resultGood: 'Good, but you can do better.',
-                resultTryAgain: 'Try again!'
+                resultTryAgain: 'Try again!',
+                invalidEmail: 'Please enter your email',
+                timeout: 'Time out',
+                correct: 'Correct',
+                incorrect: 'Incorrect',
+                questionHeader: 'Question',
+                yourAnswerHeader: 'Your Answer',
+                correctAnswerHeader: 'Correct Answer',
+                statusHeader: 'Status'
+            },
+            ru: {
+                title: 'Super Facts о Животных - Серия 2',
+                subtitle: '60+ фактов, расширенный квиз и тесты.',
+                factsHeader: 'Интересные Факты',
+                moreFactsBtn: 'Показать больше фактов',
+                quizHeader: 'Расширенный Квиз: Проверь Знания о Животных!',
+                startQuizBtn: 'Начать Квиз',
+                nextBtn: 'Далее',
+                restartQuizBtn: 'Пройти заново',
+                shareHeader: 'Поделись результатом!',
+                subscribeHeader: 'Подпишись на еженедельные факты!',
+                emailPlaceholder: 'Ваш email',
+                subscribeBtn: 'Подписаться',
+                subscribeAlert: 'Подписка оформлена!',
+                themeToggle: 'Изменить освещенность',
+                shareWhatsApp: 'В WhatsApp',
+                shareTelegram: 'В Telegram',
+                yourResult: 'Ваш результат:',
+                outOf: 'из',
+                facts: [
+                    "1. Группа фламинго называется flamboyance.",
+                    "2. У жирафов такое же количество шейных позвонков, как у людей: семь.",
+                    "3. Осьминоги могут протискиваться через любое отверстие больше их клюва.",
+                    "4. Улитка может спать три года.",
+                    "5. Мех белых медведей на самом деле прозрачный, а кожа черная.",
+                    "6. Бабочки пробуют вкус ногами.",
+                    "7. Слоны - единственные млекопитающие, которые не могут прыгать.",
+                    "8. Рог носорога сделан из волос.",
+                    "9. Пингвины могут пить соленую воду благодаря специальной железе.",
+                    "10. Отпечатки пальцев коал почти идентичны человеческим.",
+                    "11. Крокодил не может высунуть язык.",
+                    "12. Акулы могут обнаруживать электричество.",
+                    "13. Сердце креветки находится в ее голове.",
+                    "14. У сов нет глазных яблок; у них глазные трубки.",
+                    "15. Группа носорогов называется crash.",
+                    "16. У кошек более 20 мышц, контролирующих уши.",
+                    "17. Дельфины спят с одним открытым глазом.",
+                    "18. Единственное млекопитающее, способное к настоящему полету, - летучая мышь.",
+                    "19. У муравьев нет легких; они дышат через спиракли.",
+                    "20. Новорожденный кенгуру размером с фасолину.",
+                    "21. Морские выдры имеют самый густой мех среди всех животных.",
+                    "22. Колибри могут весить меньше копейки.",
+                    "23. Гигантский кальмар имеет самые большие глаза в мире.",
+                    "24. У тигров полосатая кожа, а не только полосатый мех.",
+                    "25. Группа ворон называется murder.",
+                    "26. Медузы состоят на 95% из воды.",
+                    "27. Гепард - единственная кошка, которая не может втягивать когти.",
+                    "28. Лягушки не могут глотать с открытыми глазами.",
+                    "29. Сердце синего кита размером с маленький автомобиль.",
+                    "30. У пауков голубая кровь.",
+                    "31. Коровы имеют лучших друзей и стрессуют при разлуке.",
+                    "32. У осьминога может быть до 2000 присосок.",
+                    "33. Креветка-богомол может бить с силой пули.",
+                    "34. Пингвины предлагают брак с камешком.",
+                    "35. Группа сов называется parliament.",
+                    "36. Крысы могут смеяться от щекотки.",
+                    "37. Бивень нарвала на самом деле зуб.",
+                    "38. Фламинго могут есть только с перевернутой головой.",
+                    "39. Детеныш тупика называется puffling.",
+                    "40. Гиппопотамы производят розовое молоко.",
+                    "41. Лирохвост может имитировать любой услышанный звук.",
+                    "42. Морские коньки моногамны на всю жизнь.",
+                    "43. Группа дикобразов называется prickle.",
+                    "44. У омаров голубая кровь.",
+                    "45. Медузы Turritopsis dohrnii бессмертны.",
+                    "46. Волки имеют уникальные завывания, как отпечатки пальцев.",
+                    "47. Фламинго сгибают ноги в лодыжке, а не в колене.",
+                    "48. Самое медленное животное - трехпалый ленивец.",
+                    "49. Орлы видят в 5 раз дальше людей.",
+                    "50. Группа хорьков называется business.",
+                    "51. Кошки проводят 70% жизни во сне.",
+                    "52. Яд кубомедузы самый смертоносный.",
+                    "53. Жирафы спят только 20 минут в день.",
+                    "54. Акулы существуют дольше деревьев.",
+                    "55. Группа тигров называется streak.",
+                    "56. Пчелы могут летать выше Эвереста.",
+                    "57. Язык окапи достаточно длинный, чтобы чистить глаза.",
+                    "58. Камели имеют три века.",
+                    "59. Далматинцы рождаются без пятен.",
+                    "60. Серые гончие - самые быстрые собаки."
+                ],
+                quizQuestions: [
+                    { question: "Как называется группа кошек?", options: ["Прайд", "Клаудер", "Стадо"], correct: 1 },
+                    { question: "Какое животное имеет самый густой мех?", options: ["Белый медведь", "Морская выдра", "Арктическая лиса"], correct: 1 },
+                    { question: "Какой самая быстрая птица?", options: ["Сапсан", "Орел", "Колибри"], correct: 0 },
+                    { question: "Какое самое высокое животное?", options: ["Жираф", "Слон", "Носорог"], correct: 0 },
+                    { question: "Сколько ног у осьминога?", options: ["6", "8", "10"], correct: 1 },
+                    { question: "Какое животное известно как корабль пустыни?", options: ["Верблюд", "Лошадь", "Осел"], correct: 0 },
+                    { question: "Какое единственное млекопитающее может летать?", options: ["Летучая мышь", "Белка-летяга", "Птица"], correct: 0 },
+                    { question: "Какое животное может спать 3 года?", options: ["Улитка", "Медведь", "Коала"], correct: 0 },
+                    { question: "Какого цвета кожа белого медведя?", options: ["Белая", "Черная", "Прозрачная"], correct: 1 },
+                    { question: "Какое животное пробует вкус ногами?", options: ["Бабочка", "Змея", "Лягушка"], correct: 0 },
+                    { question: "Могут ли слоны прыгать?", options: ["Да", "Нет"], correct: 1 },
+                    { question: "Из чего сделан рог носорога?", options: ["Кость", "Волосы", "Камень"], correct: 1 },
+                    { question: "Могут ли пингвины пить соленую воду?", options: ["Да", "Нет"], correct: 0 },
+                    { question: "Похожи ли отпечатки пальцев коал на человеческие?", options: ["Да", "Нет"], correct: 0 },
+                    { question: "Может ли крокодил высунуть язык?", options: ["Да", "Нет"], correct: 1 },
+                    { question: "Какого цвета молоко гиппопотама?", options: ["Белое", "Розовое", "Зеленое"], correct: 1 },
+                    { question: "Как называется группа сов?", options: ["Парламент", "Стая", "Группа"], correct: 0 },
+                    { question: "Какая медуза бессмертна?", options: ["Turritopsis dohrnii", "Кубомедуза", "Обычная медуза"], correct: 0 },
+                    { question: "Какое самое медленное животное?", options: ["Ленивец", "Улитка", "Черепаха"], correct: 0 },
+                    { question: "Как называется группа тигров?", options: ["Полоска", "Стая", "Прайд"], correct: 0 }
+                ],
+                resultExcellent: 'Отлично! Вы эксперт по животным.',
+                resultGood: 'Хорошо, но можно лучше.',
+                resultTryAgain: 'Попробуйте снова!',
+                invalidEmail: 'Пожалуйста, введите ваш email',
+                timeout: 'Время вышло',
+                correct: 'Правильно',
+                incorrect: 'Неправильно',
+                questionHeader: 'Вопрос',
+                yourAnswerHeader: 'Ваш ответ',
+                correctAnswerHeader: 'Правильный ответ',
+                statusHeader: 'Статус'
             },
             fr: {
                 title: 'Super Facts sur les Animaux - Série 2',
@@ -302,12 +390,19 @@
                 factsHeader: 'Faits Intéressants',
                 moreFactsBtn: 'Afficher Plus de Faits',
                 quizHeader: 'Quiz Étendu : Testez Vos Connaissances sur les Animaux !',
+                startQuizBtn: 'Commencer le Quiz',
                 nextBtn: 'Suivant',
+                restartQuizBtn: 'Recommencer le Quiz',
                 shareHeader: 'Partagez Votre Résultat !',
                 subscribeHeader: 'Abonnez-vous aux Faits Hebdomadaires !',
                 emailPlaceholder: 'Votre email',
                 subscribeBtn: 'S\'abonner',
                 subscribeAlert: 'Abonnement réussi !',
+                themeToggle: 'Changer Luminosité',
+                shareWhatsApp: 'Sur WhatsApp',
+                shareTelegram: 'Sur Telegram',
+                yourResult: 'Votre résultat :',
+                outOf: 'sur',
                 facts: [
                     "1. Un groupe de flamants roses s'appelle une flamboyance.",
                     "2. Les girafes ont le même nombre de vertèbres cervicales que les humains : sept.",
@@ -394,14 +489,254 @@
                 ],
                 resultExcellent: 'Excellent ! Vous êtes un expert des animaux.',
                 resultGood: 'Bien, mais vous pouvez faire mieux.',
-                resultTryAgain: 'Essayez à nouveau !'
+                resultTryAgain: 'Essayez à nouveau !',
+                invalidEmail: 'Veuillez entrer votre email',
+                timeout: 'Temps écoulé',
+                correct: 'Correct',
+                incorrect: 'Incorrect',
+                questionHeader: 'Question',
+                yourAnswerHeader: 'Votre réponse',
+                correctAnswerHeader: 'Réponse correcte',
+                statusHeader: 'Statut'
+            },
+            it: {
+                title: 'Super Fatti sugli Animali - Serie 2',
+                subtitle: '60+ fatti, quiz espanso e test.',
+                factsHeader: 'Fatti Interessanti',
+                moreFactsBtn: 'Mostra Più Fatti',
+                quizHeader: 'Quiz Espanso: Testa la Tua Conoscenza sugli Animali!',
+                startQuizBtn: 'Inizia Quiz',
+                nextBtn: 'Successivo',
+                restartQuizBtn: 'Ricomincia il Quiz',
+                shareHeader: 'Condividi il Tuo Risultato!',
+                subscribeHeader: 'Iscriviti ai Fatti Settimanali!',
+                emailPlaceholder: 'La tua email',
+                subscribeBtn: 'Iscriviti',
+                subscribeAlert: 'Iscrizione riuscita!',
+                themeToggle: 'Cambia Luminosità',
+                shareWhatsApp: 'Su WhatsApp',
+                shareTelegram: 'Su Telegram',
+                yourResult: 'Il tuo risultato:',
+                outOf: 'su',
+                facts: [
+                    "1. Un gruppo di fenicotteri si chiama flamboyance.",
+                    "2. Le giraffe hanno lo stesso numero di vertebre cervicali degli umani: sette.",
+                    "3. I polpi possono passare attraverso qualsiasi foro più grande del loro becco.",
+                    "4. Una lumaca può dormire per tre anni.",
+                    "5. La pelliccia degli orsi polari è in realtà trasparente, e la loro pelle è nera.",
+                    "6. Le farfalle gustano con i piedi.",
+                    "7. Gli elefanti sono gli unici mammiferi che non possono saltare.",
+                    "8. Il corno di un rinoceronte è fatto di capelli.",
+                    "9. I pinguini possono bere acqua salata grazie a una ghiandola speciale.",
+                    "10. Le impronte digitali dei koala sono quasi identiche a quelle umane.",
+                    "11. Un coccodrillo non può tirare fuori la lingua.",
+                    "12. Gli squali possono rilevare l'elettricità.",
+                    "13. Il cuore di un gambero è nella sua testa.",
+                    "14. I gufi non hanno bulbi oculari; hanno tubi oculari.",
+                    "15. Un gruppo di rinoceronti si chiama crash.",
+                    "16. I gatti hanno oltre 20 muscoli che controllano le loro orecchie.",
+                    "17. I delfini dormono con un occhio aperto.",
+                    "18. L'unico mammifero capace di vero volo è il pipistrello.",
+                    "19. Le formiche non hanno polmoni; respirano attraverso spiracoli.",
+                    "20. Un neonato canguro è della dimensione di un fagiolo lima.",
+                    "21. Le lontre di mare hanno la pelliccia più spessa di tutti gli animali.",
+                    "22. I colibrì possono pesare meno di una moneta.",
+                    "23. Il calamaro gigante ha gli occhi più grandi del mondo.",
+                    "24. Le tigri hanno la pelle a strisce, non solo la pelliccia a strisce.",
+                    "25. Un gruppo di corvi si chiama murder.",
+                    "26. Le meduse sono composte al 95% di acqua.",
+                    "27. Il ghepardo è l'unico gatto che non può ritrarre gli artigli.",
+                    "28. Le rane non possono ingoiare con gli occhi aperti.",
+                    "29. Il cuore della balena blu è della dimensione di una piccola auto.",
+                    "30. I ragni hanno sangue blu.",
+                    "31. Le mucche hanno migliori amici e si stressano quando separate.",
+                    "32. Un polpo può avere fino a 2.000 ventose.",
+                    "33. Il gambero mantide può colpire con la forza di un proiettile.",
+                    "34. I pinguini propongono con un sasso.",
+                    "35. Un gruppo di gufi si chiama parliament.",
+                    "36. I ratti possono ridere quando solleticati.",
+                    "37. La zanna del narvalo è in realtà un dente.",
+                    "38. I fenicotteri possono mangiare solo con la testa capovolta.",
+                    "39. Un cucciolo di pulcinella di mare si chiama puffling.",
+                    "40. Gli ippopotami producono latte rosa.",
+                    "41. L'uccello lira può imitare qualsiasi suono che sente.",
+                    "42. I cavallucci marini si accoppiano per la vita.",
+                    "43. Un gruppo di istrici si chiama prickle.",
+                    "44. Le aragoste hanno sangue blu.",
+                    "45. La medusa Turritopsis dohrnii è immortale.",
+                    "46. I lupi hanno ululati unici come impronte digitali.",
+                    "47. I fenicotteri piegano le gambe alla caviglia, non al ginocchio.",
+                    "48. L'animale più lento è il bradipo tridattilo.",
+                    "49. Le aquile possono vedere fino a 5 volte più lontano degli umani.",
+                    "50. Un gruppo di furetti si chiama business.",
+                    "51. I gatti passano il 70% della loro vita dormendo.",
+                    "52. Il veleno della medusa scatola è il più mortale.",
+                    "53. Le giraffe dormono solo 20 minuti al giorno.",
+                    "54. Gli squali esistono da più tempo degli alberi.",
+                    "55. Un gruppo di tigri si chiama streak.",
+                    "56. Le api possono volare più in alto del Monte Everest.",
+                    "57. La lingua dell'okapi è abbastanza lunga da pulire i suoi occhi.",
+                    "58. I cammelli hanno tre palpebre.",
+                    "59. I dalmati nascono senza macchie.",
+                    "60. I levrieri sono i cani più veloci del mondo."
+                ],
+                quizQuestions: [
+                    { question: "Come si chiama un gruppo di gatti?", options: ["Orgoglio", "Clowder", "Mandria"], correct: 1 },
+                    { question: "Quale animale ha la pelliccia più spessa?", options: ["Orso polare", "Lontra di mare", "Volpe artica"], correct: 1 },
+                    { question: "Qual è l'uccello più veloce del mondo?", options: ["Falco pellegrino", "Aquila", "Colibrì"], correct: 0 },
+                    { question: "Qual è l'animale più alto?", options: ["Giraffa", "Elefante", "Rinoceronte"], correct: 0 },
+                    { question: "Quante gambe ha un polpo?", options: ["6", "8", "10"], correct: 1 },
+                    { question: "Quale animale è noto come la nave del deserto?", options: ["Cammello", "Cavallo", "Asino"], correct: 0 },
+                    { question: "Qual è l'unico mammifero che può volare?", options: ["Pipistrello", "Scoiattolo volante", "Uccello"], correct: 0 },
+                    { question: "Quale animale può dormire per 3 anni?", options: ["Lumaca", "Orso", "Koala"], correct: 0 },
+                    { question: "Di che colore è la pelle di un orso polare?", options: ["Bianco", "Nero", "Trasparente"], correct: 1 },
+                    { question: "Quale animale gusta con i piedi?", options: ["Farfalla", "Serpente", "Rana"], correct: 0 },
+                    { question: "Gli elefanti possono saltare?", options: ["Sì", "No"], correct: 1 },
+                    { question: "Di cosa è fatto il corno di un rinoceronte?", options: ["Osso", "Capelli", "Pietra"], correct: 1 },
+                    { question: "I pinguini possono bere acqua salata?", options: ["Sì", "No"], correct: 0 },
+                    { question: "Le impronte digitali dei koala sono simili a quelle umane?", options: ["Sì", "No"], correct: 0 },
+                    { question: "Un coccodrillo può tirare fuori la lingua?", options: ["Sì", "No"], correct: 1 },
+                    { question: "Di che colore è il latte dell'ippopotamo?", options: ["Bianco", "Rosa", "Verde"], correct: 1 },
+                    { question: "Come si chiama un gruppo di gufi?", options: ["Parlamento", "Stormo", "Gruppo"], correct: 0 },
+                    { question: "Quale medusa è immortale?", options: ["Turritopsis dohrnii", "Medusa scatola", "Medusa comune"], correct: 0 },
+                    { question: "Qual è l'animale più lento?", options: ["Bradipo", "Lumaca", "Tartaruga"], correct: 0 },
+                    { question: "Come si chiama un gruppo di tigri?", options: ["Striscia", "Branco", "Orgoglio"], correct: 0 }
+                ],
+                resultExcellent: 'Eccellente! Sei un esperto di animali.',
+                resultGood: 'Bene, ma puoi fare meglio.',
+                resultTryAgain: 'Riprova!',
+                invalidEmail: 'Inserisci la tua email',
+                timeout: 'Tempo scaduto',
+                correct: 'Corretto',
+                incorrect: 'Sbagliato',
+                questionHeader: 'Domanda',
+                yourAnswerHeader: 'Tua risposta',
+                correctAnswerHeader: 'Risposta corretta',
+                statusHeader: 'Stato'
+            },
+            es: {
+                title: 'Super Facts sobre Animales - Serie 2',
+                subtitle: 'Más de 60 hechos, cuestionario ampliado y pruebas.',
+                factsHeader: 'Hechos Interesantes',
+                moreFactsBtn: 'Mostrar Más Hechos',
+                quizHeader: 'Cuestionario Ampliado: ¡Prueba Tu Conocimiento sobre Animales!',
+                startQuizBtn: 'Iniciar Cuestionario',
+                nextBtn: 'Siguiente',
+                restartQuizBtn: 'Reiniciar Cuestionario',
+                shareHeader: '¡Comparte Tu Resultado!',
+                subscribeHeader: '¡Suscríbete a Hechos Semanales!',
+                emailPlaceholder: 'Tu correo electrónico',
+                subscribeBtn: 'Suscribirse',
+                subscribeAlert: '¡Suscripción exitosa!',
+                themeToggle: 'Cambiar Brillo',
+                shareWhatsApp: 'En WhatsApp',
+                shareTelegram: 'En Telegram',
+                yourResult: 'Tu resultado:',
+                outOf: 'de',
+                facts: [
+                    "1. Un grupo de flamencos se llama flamboyance.",
+                    "2. Las jirafas tienen el mismo número de vértebras cervicales que los humanos: siete.",
+                    "3. Los pulpos pueden pasar por cualquier agujero más grande que su pico.",
+                    "4. Un caracol puede dormir durante tres años.",
+                    "5. El pelaje de los osos polares es en realidad transparente, y su piel es negra.",
+                    "6. Las mariposas prueban con sus pies.",
+                    "7. Los elefantes son los únicos mamíferos que no pueden saltar.",
+                    "8. El cuerno de un rinoceronte está hecho de pelo.",
+                    "9. Los pingüinos pueden beber agua salada gracias a una glándula especial.",
+                    "10. Las huellas dactilares de los koalas son casi idénticas a las humanas.",
+                    "11. Un cocodrilo no puede sacar la lengua.",
+                    "12. Los tiburones pueden detectar la electricidad.",
+                    "13. El corazón de un camarón está en su cabeza.",
+                    "14. Los búhos no tienen globos oculares; tienen tubos oculares.",
+                    "15. Un grupo de rinocerontes se llama crash.",
+                    "16. Los gatos tienen más de 20 músculos que controlan sus orejas.",
+                    "17. Los delfines duermen con un ojo abierto.",
+                    "18. El único mamífero capaz de vuelo verdadero es el murciélago.",
+                    "19. Las hormigas no tienen pulmones; respiran a través de espiráculos.",
+                    "20. Un canguro recién nacido es del tamaño de un frijol lima.",
+                    "21. Las nutrias marinas tienen el pelaje más grueso de todos los animales.",
+                    "22. Los colibríes pueden pesar menos que una moneda.",
+                    "23. El calamar gigante tiene los ojos más grandes del mundo.",
+                    "24. Los tigres tienen piel rayada, no solo pelaje rayado.",
+                    "25. Un grupo de cuervos se llama murder.",
+                    "26. Las medusas están compuestas por un 95% de agua.",
+                    "27. El guepardo es el único gato que no puede retraer sus garras.",
+                    "28. Las ranas no pueden tragar con los ojos abiertos.",
+                    "29. El corazón de la ballena azul es del tamaño de un coche pequeño.",
+                    "30. Las arañas tienen sangre azul.",
+                    "31. Las vacas tienen mejores amigos y se estresan cuando se separan.",
+                    "32. Un pulpo puede tener hasta 2,000 ventosas.",
+                    "33. El camarón mantis puede golpear con la fuerza de una bala.",
+                    "34. Los pingüinos proponen matrimonio con una piedra.",
+                    "35. Un grupo de búhos se llama parliament.",
+                    "36. Las ratas pueden reír cuando se les hace cosquillas.",
+                    "37. El colmillo del narval es en realidad un diente.",
+                    "38. Los flamencos solo pueden comer con la cabeza boca abajo.",
+                    "39. Un bebé frailecillo se llama puffling.",
+                    "40. Los hipopótamos producen leche rosa.",
+                    "41. El pájaro lira puede imitar cualquier sonido que escuche.",
+                    "42. Los caballitos de mar se emparejan de por vida.",
+                    "43. Un grupo de puercoespines se llama prickle.",
+                    "44. Las langostas tienen sangre azul.",
+                    "45. La medusa Turritopsis dohrnii es inmortal.",
+                    "46. Los lobos tienen aullidos únicos como huellas dactilares.",
+                    "47. Los flamencos doblan las piernas en el tobillo, no en la rodilla.",
+                    "48. El animal más lento es el perezoso de tres dedos.",
+                    "49. Las águilas pueden ver hasta 5 veces más lejos que los humanos.",
+                    "50. Un grupo de hurones se llama business.",
+                    "51. Los gatos pasan el 70% de su vida durmiendo.",
+                    "52. El veneno de la medusa caja es el más mortal.",
+                    "53. Las jirafas duermen solo 20 minutos al día.",
+                    "54. Los tiburones han existido más tiempo que los árboles.",
+                    "55. Un grupo de tigres se llama streak.",
+                    "56. Las abejas pueden volar más alto que el Monte Everest.",
+                    "57. La lengua del okapi es lo suficientemente larga para limpiar sus ojos.",
+                    "58. Los camellos tienen tres párpados.",
+                    "59. Los dálmatas nacen sin manchas.",
+                    "60. Los galgos son los perros más rápidos del mundo."
+                ],
+                quizQuestions: [
+                    { question: "¿Cómo se llama un grupo de gatos?", options: ["Orgullo", "Clowder", "Manada"], correct: 1 },
+                    { question: "¿Qué animal tiene el pelaje más grueso?", options: ["Oso polar", "Nutria marina", "Zorro ártico"], correct: 1 },
+                    { question: "¿Cuál es el ave más rápida del mundo?", options: ["Halcón peregrino", "Águila", "Colibrí"], correct: 0 },
+                    { question: "¿Cuál es el animal más alto?", options: ["Jirafa", "Elefante", "Rinoceronte"], correct: 0 },
+                    { question: "¿Cuántas patas tiene un pulpo?", options: ["6", "8", "10"], correct: 1 },
+                    { question: "¿Qué animal se conoce como el barco del desierto?", options: ["Camello", "Caballo", "Burro"], correct: 0 },
+                    { question: "¿Cuál es el único mamífero que puede volar?", options: ["Murciélago", "Ardilla voladora", "Ave"], correct: 0 },
+                    { question: "¿Qué animal puede dormir durante 3 años?", options: ["Caracol", "Oso", "Koala"], correct: 0 },
+                    { question: "¿De qué color es la piel de un oso polar?", options: ["Blanco", "Negro", "Transparente"], correct: 1 },
+                    { question: "¿Qué animal prueba con sus pies?", options: ["Mariposa", "Serpiente", "Rana"], correct: 0 },
+                    { question: "¿Pueden saltar los elefantes?", options: ["Sí", "No"], correct: 1 },
+                    { question: "¿De qué está hecho el cuerno de un rinoceronte?", options: ["Hueso", "Pelo", "Piedra"], correct: 1 },
+                    { question: "¿Pueden los pingüinos beber agua salada?", options: ["Sí", "No"], correct: 0 },
+                    { question: "¿Son similares las huellas dactilares de los koalas a las humanas?", options: ["Sí", "No"], correct: 0 },
+                    { question: "¿Puede un cocodrilo sacar la lengua?", options: ["Sí", "No"], correct: 1 },
+                    { question: "¿De qué color es la leche de hipopótamo?", options: ["Blanco", "Rosa", "Verde"], correct: 1 },
+                    { question: "¿Cómo se llama un grupo de búhos?", options: ["Parlamento", "Bandada", "Grupo"], correct: 0 },
+                    { question: "¿Qué medusa es inmortal?", options: ["Turritopsis dohrnii", "Medusa caja", "Medusa común"], correct: 0 },
+                    { question: "¿Cuál es el animal más lento?", options: ["Perezoso", "Caracol", "Tortuga"], correct: 0 },
+                    { question: "¿Cómo se llama un grupo de tigres?", options: ["Raya", "Manada", "Orgullo"], correct: 0 }
+                ],
+                resultExcellent: '¡Excelente! Eres un experto en animales.',
+                resultGood: 'Bien, pero puedes hacerlo mejor.',
+                resultTryAgain: '¡Inténtalo de nuevo!',
+                invalidEmail: 'Por favor, introduce tu correo electrónico',
+                timeout: 'Tiempo agotado',
+                correct: 'Correcto',
+                incorrect: 'Incorrecto',
+                questionHeader: 'Pregunta',
+                yourAnswerHeader: 'Tu respuesta',
+                correctAnswerHeader: 'Respuesta correcta',
+                statusHeader: 'Estado'
             }
         };
 
-        let currentLang = 'ru';
+        let currentLang = 'en';
         let currentQuestion = 0;
         let score = 0;
         let shownFacts = 10;
+        let answers = [];
+        let timerInterval;
 
         function changeLanguage(lang) {
             currentLang = lang;
@@ -415,57 +750,115 @@
                     }
                 }
             });
-            loadFacts();
+            const grid = document.getElementById('factGrid');
+            grid.innerHTML = '';
+            shownFacts = 10;
+            appendFacts(0, shownFacts);
+            if (shownFacts >= translations[currentLang].facts.length) {
+                document.querySelector('#facts button').style.display = 'none';
+            } else {
+                document.querySelector('#facts button').style.display = 'block';
+            }
+            resetQuiz();
+            updateThemeButton();
+        }
+
+        function resetQuiz() {
             currentQuestion = 0;
             score = 0;
+            answers = [];
+            document.getElementById('start-quiz-btn').style.display = 'block';
+            document.getElementById('quiz-progress').style.display = 'none';
+            document.getElementById('quiz-question').style.display = 'none';
+            document.getElementById('quiz-timer').style.display = 'none';
+            document.getElementById('quiz-options').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('quiz-result').style.display = 'none';
+        }
+
+        function startQuiz() {
+            document.getElementById('start-quiz-btn').style.display = 'none';
+            document.getElementById('quiz-progress').style.display = 'block';
             loadQuestion();
         }
 
-        function loadFacts() {
+        function restartQuiz() {
+            resetQuiz();
+            startQuiz();
+        }
+
+        function appendFacts(start, end) {
             const grid = document.getElementById('factGrid');
-            grid.innerHTML = '';
-            const langFacts = translations[currentLang].facts.slice(0, shownFacts);
-            langFacts.forEach((fact, index) => {
+            const langFacts = translations[currentLang].facts.slice(start, end);
+            langFacts.forEach((fact, i) => {
                 const factDiv = document.createElement('div');
                 factDiv.classList.add('fact');
-                factDiv.style.animationDelay = `${index * 0.1}s`;
+                factDiv.style.animationDelay = `${i * 0.1}s`;
                 factDiv.textContent = fact;
                 grid.appendChild(factDiv);
             });
         }
 
         function showMoreFacts() {
+            const oldShown = shownFacts;
             shownFacts = Math.min(shownFacts + 10, translations[currentLang].facts.length);
-            loadFacts();
+            appendFacts(oldShown, shownFacts);
             if (shownFacts >= translations[currentLang].facts.length) {
                 document.querySelector('#facts button').style.display = 'none';
             }
         }
 
         function loadQuestion() {
+            clearInterval(timerInterval);
             const q = translations[currentLang].quizQuestions[currentQuestion];
             document.getElementById('quiz-question').textContent = q.question;
+            document.getElementById('quiz-question').style.display = 'block';
             const optionsDiv = document.getElementById('quiz-options');
             optionsDiv.innerHTML = '';
             q.options.forEach((opt, idx) => {
                 const optDiv = document.createElement('div');
                 optDiv.classList.add('quiz-option');
                 optDiv.textContent = opt;
-                optDiv.onclick = () => selectOption(idx);
+                optDiv.onclick = () => selectOption(idx, q);
                 optionsDiv.appendChild(optDiv);
             });
+            optionsDiv.style.display = 'flex';
             document.getElementById('next-btn').style.display = 'none';
             updateProgress();
             document.getElementById('quiz-result').style.display = 'none';
-            document.getElementById('quiz-question').style.display = 'block';
-            document.getElementById('quiz-options').style.display = 'flex';
+            document.getElementById('quiz-timer').style.display = 'block';
+
+            let timeLeft = 10;
+            document.getElementById('quiz-timer').textContent = timeLeft;
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('quiz-timer').textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    answers.push({
+                        question: q.question,
+                        userChoice: translations[currentLang].timeout,
+                        correctChoice: q.options[q.correct],
+                        isCorrect: false
+                    });
+                    nextQuestion();
+                }
+            }, 1000);
         }
 
-        function selectOption(idx) {
+        function selectOption(idx, q) {
+            clearInterval(timerInterval);
             const options = document.querySelectorAll('.quiz-option');
             options.forEach(opt => opt.classList.remove('selected'));
             options[idx].classList.add('selected');
-            if (idx === translations[currentLang].quizQuestions[currentQuestion].correct) score++;
+            const isCorrect = idx === q.correct;
+            if (isCorrect) score++;
+            answers.push({
+                question: q.question,
+                userChoice: q.options[idx],
+                correctChoice: q.options[q.correct],
+                isCorrect: isCorrect
+            });
             document.getElementById('next-btn').style.display = 'block';
         }
 
@@ -486,6 +879,7 @@
         function showResult() {
             document.getElementById('quiz-question').style.display = 'none';
             document.getElementById('quiz-options').style.display = 'none';
+            document.getElementById('quiz-timer').style.display = 'none';
             document.getElementById('next-btn').style.display = 'none';
             const resultDiv = document.getElementById('quiz-result');
             resultDiv.style.display = 'block';
@@ -493,18 +887,29 @@
             if (score > 14) message = translations[currentLang].resultExcellent;
             else if (score > 9) message = translations[currentLang].resultGood;
             else message = translations[currentLang].resultTryAgain;
-            resultDiv.innerHTML = `<h3>Your score: ${score} out of ${translations[currentLang].quizQuestions.length}</h3><p>${message}</p>`;
+
+            let tableHtml = `<table><thead><tr><th>${translations[currentLang].questionHeader}</th><th>${translations[currentLang].yourAnswerHeader}</th><th>${translations[currentLang].correctAnswerHeader}</th><th>${translations[currentLang].statusHeader}</th></tr></thead><tbody>`;
+            answers.forEach(ans => {
+                tableHtml += `<tr><td>${ans.question}</td><td>${ans.userChoice}</td><td>${ans.correctChoice}</td><td>${ans.isCorrect ? translations[currentLang].correct : translations[currentLang].incorrect}</td></tr>`;
+            });
+            tableHtml += '</tbody></table>';
+
+            resultDiv.innerHTML = `<h3>${translations[currentLang].yourResult} ${score} ${translations[currentLang].outOf} ${translations[currentLang].quizQuestions.length}</h3><p>${message}</p>${tableHtml}<button onclick="restartQuiz()" data-key="restartQuizBtn">Restart Quiz</button>`;
         }
 
         function shareOnSocial(network) {
-            let shareText = `Я набрал ${score} в квизе о животных на Super Facts - Серия 2!`; // Default to Russian
-            if (currentLang === 'en') {
-                shareText = `I scored ${score} in the animal quiz on Super Facts - Series 2!`;
+            let shareText = `I scored ${score} in the animal quiz on Super Facts - Series 2!`;
+            if (currentLang === 'ru') {
+                shareText = `Я набрал ${score} в квизе о животных на Super Facts - Серия 2!`;
             } else if (currentLang === 'fr') {
                 shareText = `J'ai marqué ${score} au quiz sur les animaux sur Super Facts - Série 2 !`;
+            } else if (currentLang === 'it') {
+                shareText = `Ho ottenuto ${score} nel quiz sugli animali su Super Facts - Serie 2!`;
+            } else if (currentLang === 'es') {
+                shareText = `¡Obtuve ${score} en el cuestionario de animales en Super Facts - Serie 2!`;
             }
             const encodedShareText = encodeURIComponent(shareText);
-            const shareUrl = encodeURIComponent(window.location.href); // Use current page URL
+            const shareUrl = encodeURIComponent(window.location.href);
             let url;
             if (network === 'WhatsApp') {
                 url = `https://api.whatsapp.com/send?text=${encodedShareText}%20${shareUrl}`;
@@ -517,12 +922,41 @@
         }
 
         function subscribe() {
-            alert(translations[currentLang].subscribeAlert);
+            const email = document.getElementById('subscribe-email').value.trim();
+            if (email) {
+                let subjectText = 'Subscription Request';
+                if (currentLang === 'ru') {
+                    subjectText = 'Запрос на подписку';
+                } else if (currentLang === 'es') {
+                    subjectText = 'Solicitud de suscripción';
+                } else if (currentLang === 'fr') {
+                    subjectText = 'Demande d\'abonnement';
+                } else if (currentLang === 'it') {
+                    subjectText = 'Richiesta di iscrizione';
+                }
+                const subject = encodeURIComponent(subjectText);
+                const body = encodeURIComponent(`Please subscribe me to weekly facts: ${email}`);
+                window.location.href = `mailto:info@superfacts.fr?subject=${subject}&body=${body}`;
+                alert(translations[currentLang].subscribeAlert);
+            } else {
+                alert(translations[currentLang].invalidEmail);
+            }
         }
 
-        // Инициализация
-        changeLanguage('ru');
+        function updateThemeButton() {
+            const icon = document.body.classList.contains('dark') ? '🌙' : '☀️';
+            const text = translations[currentLang].themeToggle;
+            document.getElementById('theme-toggle').innerHTML = `${icon} ${text}`;
+        }
+
+        // Theme toggle
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            updateThemeButton();
+        });
+
+        // Initialization
+        changeLanguage('en');
     </script>
 </body>
 </html>
-```

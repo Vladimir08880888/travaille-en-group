@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="60+ интересных фактов о животных, расширенный квиз и забавные тесты. Делись результатами!">
-    <meta name="keywords" content="факты о животных, интересные факты, квиз о животных, тест про животных">
-    <title>Super Facts о Животных - Факты и Квизы</title>
+    <meta name="description" content="60+ interesting animal facts, expanded quiz, and fun tests. Share your results!">
+    <meta name="keywords" content="animal facts, interesting facts, animal quiz, animal test">
+    <title>Super Facts about Animals - Facts and Quizzes</title>
     <style>
         :root {
             --bg-color: #ffffff;
@@ -92,171 +91,89 @@
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .spin-button { display: inline-block; text-align: center; padding: 0.5rem 1rem; font-size: 0.8rem; position: fixed; bottom: 1rem; left: 1rem; z-index: 1000; background: var(--spin-bg); color: var(--spin-text); }
-        .spin-button:hover { animation: spin 2s linear infinite; background: var(--spin-hover-bg); }
+        .spin-button:hover { background: var(--spin-hover-bg); }
         @media (max-width: 768px) { .fact-grid { grid-template-columns: 1fr; } }
+        #quiz-timer { font-size: 1.5rem; text-align: center; margin-bottom: 1rem; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        table th, table td { border: 1px solid var(--option-border); padding: 0.5rem; text-align: left; }
+        table th { background: var(--option-hover); }
     </style>
 </head>
 <body>
     <header>
-        <h1 data-key="title">Super Facts о Животных</h1>
-        <p data-key="subtitle">60+ фактов, расширенный квиз и тесты в стиле современного меню!</p>
+        <h1 data-key="title">Super Facts about Animals</h1>
+        <p data-key="subtitle">60+ facts, expanded quiz and tests.</p>
         <select class="lang-select" onchange="changeLanguage(this.value)">
-            <option value="ru">Русский</option>
             <option value="en">English</option>
+            <option value="ru">Русский</option>
             <option value="fr">Français</option>
+            <option value="it">Italiano</option>
+            <option value="es">Español</option>
         </select>
-        <button id="theme-toggle" data-key="themeToggle">Изменить освещенность</button>
+        <button id="theme-toggle" data-key="themeToggle">Change Brightness</button>
     </header>
 
     <div class="container">
-        <!-- Рекламный баннер -->
+        <!-- Ad banner -->
         <div class="ad">
-            <!-- Вставьте код Google Adsense здесь -->
+            <!-- Insert Google Adsense code here -->
         </div>
 
         <section id="facts">
-            <h2 data-key="factsHeader">Интересные Факты</h2>
-            <button onclick="showMoreFacts()" data-key="moreFactsBtn">Показать больше фактов</button>
+            <h2 data-key="factsHeader">Interesting Facts</h2>
             <div class="fact-grid" id="factGrid">
-                <!-- Факты добавляются через JS -->
+                <!-- Facts added via JS -->
             </div>
+            <button onclick="showMoreFacts()" data-key="moreFactsBtn">Show More Facts</button>
         </section>
 
-        <!-- Расширенный Квиз -->
+        <!-- Expanded Quiz -->
         <section class="quiz-section">
-            <h2 data-key="quizHeader">Расширенный Квиз: Проверь Знания о Животных!</h2>
-            <div id="quiz-progress"><div id="quiz-progress-bar"></div></div>
-            <div id="quiz-question" class="quiz-question"></div>
-            <div id="quiz-options" class="quiz-options"></div>
-            <button id="next-btn" onclick="nextQuestion()" style="display:none;" data-key="nextBtn">Далее</button>
+            <h2 data-key="quizHeader">Expanded Quiz: Test Your Animal Knowledge!</h2>
+            <button id="start-quiz-btn" onclick="startQuiz()" data-key="startQuizBtn">Start Quiz</button>
+            <div id="quiz-progress" style="display:none;"><div id="quiz-progress-bar"></div></div>
+            <div id="quiz-question" class="quiz-question" style="display:none;"></div>
+            <div id="quiz-timer" style="display:none;"></div>
+            <div id="quiz-options" class="quiz-options" style="display:none;"></div>
+            <button id="next-btn" onclick="nextQuestion()" style="display:none;" data-key="nextBtn">Next</button>
             <div id="quiz-result" style="display:none; text-align:center; margin-top:2rem;"></div>
         </section>
 
-        <!-- Реклама -->
+        <!-- Ad -->
         <div class="ad">
-            <!-- Вставьте код Adsense здесь -->
+            <!-- Insert Adsense code here -->
         </div>
 
         <div class="share">
-            <h3 data-key="shareHeader">Поделись результатом!</h3>
+            <h3 data-key="shareHeader">Share Your Result!</h3>
             <button onclick="shareOnSocial('WhatsApp')">WhatsApp</button>
             <button onclick="shareOnSocial('Telegram')">Telegram</button>
         </div>
 
         <div class="subscribe">
-            <h3 data-key="subscribeHeader">Подпишись на еженедельные факты!</h3>
-            <input type="email" data-key="emailPlaceholder" placeholder="Ваш email">
-            <button onclick="subscribe()" data-key="subscribeBtn">Подписаться</button>
+            <h3 data-key="subscribeHeader">Subscribe to Weekly Facts!</h3>
+            <input type="email" id="subscribe-email" data-key="emailPlaceholder" placeholder="Your email">
+            <button onclick="subscribe()" data-key="subscribeBtn">Subscribe</button>
         </div>
     </div>
 
     <footer>
-        © 2025 SuperFacts. 
+        © 2025 SuperFacts. <div>info@superfacts.fr</div>
     </footer>
 
-    <button class="spin-button" onclick="window.location.href='superfact.html'" data-key="spinBtn">Перейти ко второй серии Super Facts</button>
+    <button class="spin-button" onclick="window.location.href='superfact.html'" data-key="spinBtn">Go to the second series of Super Facts</button>
 
     <script>
         const translations = {
-            ru: {
-                title: 'Super Facts о Животных',
-                subtitle: '60+ фактов, расширенный квиз и тесты.',
-                factsHeader: 'Интересные Факты',
-                moreFactsBtn: 'Показать больше фактов',
-                quizHeader: 'Расширенный Квиз: Проверь Знания о Животных!',
-                nextBtn: 'Далее',
-                shareHeader: 'Поделись результатом!',
-                subscribeHeader: 'Подпишись на еженедельные факты!',
-                emailPlaceholder: 'Ваш email',
-                subscribeBtn: 'Подписаться',
-                subscribeAlert: 'Подписка оформлена!',
-                themeToggle: 'Изменить освещенность',
-                spinBtn: 'Перейти ко второй серии Super Facts',
-                facts: [
-                    "1. Самое громкое животное в мире — 2-сантиметровая креветка Pistol Shrimp, которая создаёт звуковой взрыв громче, чем у Конкорда.",
-                    "2. Фламинго рождаются серыми, а розовый цвет получают от диеты из креветок и водорослей.",
-                    "3. Выдры держатся за руки во сне, чтобы не уплыть друг от друга.",
-                    "4. Колибри — единственные птицы, которые могут летать назад.",
-                    "5. Дельфины используют токсичных иглобрюхов, чтобы \"накуриться\" — они выделяют наркотические токсины.",
-                    "6. Самая ядовитая змея — Inland Taipan, укус которой может убить 100 человек.",
-                    "7. Самое смертоносное животное — комар, вызывающий 725 000 смертей в год от болезней.",
-                    "8. На каждого человека приходится более 1,4 миллиарда насекомых.",
-                    "9. Подёнка имеет самую короткую взрослую жизнь — 24 часа.",
-                    "10. Рогатая ящерица стреляет кровью из глаз на 1 метр, чтобы запутать хищников.",
-                    "11. Петухи запрокидывают голову при кукареканье, чтобы защитить уши от собственного шума (свыше 100 дБ).",
-                    "12. Самый большой кальмар — более 15 метров и весом в тонну.",
-                    "13. Панголин сворачивается в бронированный шар от львов.",
-                    "14. Коалы спят до 22 часов в сутки из-за токсичной диеты из эвкалипта.",
-                    "15. Стрижи могут летать почти год без посадки.",
-                    "16. Таракан живёт недели без головы, а голова — часы без тела.",
-                    "17. Группа попугаев — пандемониум, дикобразов — колючка.",
-                    "18. Коровы производят 52 кг навоза в день (9,5 тонн в год).",
-                    "19. У садовой улитки 14 000 зубов.",
-                    "20. Язык синего кита весит как машина (2,7 тонны).",
-                    "21. Самое долгоживущее животное — черепаха, прожившая 188 лет.",
-                    "22. Гепард — самый быстрый на суше (120 км/ч).",
-                    "23. Слонята сосут хобот для комфорта, как дети большой палец.",
-                    "24. Челюсти нильского крокодила давят с силой 2268 кг/см².",
-                    "25. Аксолотли регенерируют конечности до 5 раз.",
-                    "26. Гигантский тихоокеанский осьминог имеет 3 сердца, 9 мозгов и голубую кровь.",
-                    "27. Блоха прыгает на 200 раз свою длину.",
-                    "28. Самец морского конька рожает до 2000 детёнышей.",
-                    "29. Иглобрюх содержит токсин, в 1200 раз смертоноснее цианида.",
-                    "30. Water Boatman — самое громкое животное относительно размера (99 дБ от трения гениталий).",
-                    "31. Белые медведи не белые; их бесцветная шерсть отражает свет.",
-                    "32. Девятипоясные броненосцы рожают четырёх идентичных детёнышей.",
-                    "33. Гигантская черепаха с Галапагос весит как бурый медведь — 250 кг.",
-                    "34. Рёв льва слышен за 5 км.",
-                    "35. Дикие двугорбые верблюды пьют до 400 литров воды за раз.",
-                    "36. Королевская рогатая ящерица брызжет кровью из глаз.",
-                    "37. Глаза страуса больше его мозга.",
-                    "38. Коалы спят 18-22 часа в день.",
-                    "39. Морские черепахи живут до 100 лет.",
-                    "40. Укус гризли может раздавить шар для боулинга.",
-                    "41. Какашки вомбата кубической формы.",
-                    "42. Панды рождаются розовыми и чернеют через месяц.",
-                    "43. Новорождённые жирафы весят 100 кг.",
-                    "44. Белоголовые орланы ныряют за рыбой со скоростью 160 км/ч.",
-                    "45. Фламинго розовеют от креветок.",
-                    "46. Выдры держатся за руки во сне.",
-                    "47. Комары — самые смертоносные из-за болезней.",
-                    "48. Самый большой кальмар — 15+ метров, 900 кг.",
-                    "49. Мать-осьминог погибает после вылупления яиц.",
-                    "50. У садовой улитки до 14 000 зубов.",
-                    "51. Язык синего кита — 2,7-3,6 тонны.",
-                    "52. Иглобрюх убивает 30 взрослых токсином.",
-                    "53. Запах скунса слышен за 5,6 км.",
-                    "54. Японские паукообразные крабы имеют размах ног 4 м.",
-                    "55. Клюворыл может проглотить маленького аллигатора целиком.",
-                    "56. Удар электрического угря сбивает лошадь.",
-                    "57. У пчёл 5 глаз.",
-                    "58. Взрослые кошки мяукают только людям.",
-                    "59. Крысы смеются от щекотки.",
-                    "60. Кенгуру не могут ходить назад."
-                ],
-                quizQuestions: [
-                    { question: "Какое животное спит 20 часов в сутки?", options: ["Коала", "Слон", "Кот"], correct: 0 },
-                    { question: "Фламинго рождаются розовыми?", options: ["Да", "Нет"], correct: 1 },
-                    { question: "Сколько сердец у осьминога?", options: ["1", "2", "3"], correct: 2 },
-                    { question: "Какое животное может летать назад?", options: ["Колибри", "Сова", "Орёл"], correct: 0 },
-                    { question: "Самое смертоносное животное в мире?", options: ["Комар", "Лев", "Змея"], correct: 0 },
-                    { question: "Выдры держатся за руки во сне?", options: ["Да", "Нет"], correct: 0 },
-                    { question: "Таракан может жить без головы?", options: ["Да, неделю", "Нет"], correct: 0 },
-                    { question: "Язык синего кита весит как слон?", options: ["Да", "Нет"], correct: 0 },
-                    { question: "Кенгуру могут ходить назад?", options: ["Да", "Нет"], correct: 1 },
-                    { question: "Крысы смеются от щекотки?", options: ["Да", "Нет"], correct: 0 }
-                ],
-                resultExcellent: 'Отлично! Вы эксперт по животным.',
-                resultGood: 'Хорошо, но можно лучше.',
-                resultTryAgain: 'Попробуйте снова!'
-            },
             en: {
                 title: 'Super Facts about Animals',
                 subtitle: '60+ facts, expanded quiz and tests.',
                 factsHeader: 'Interesting Facts',
                 moreFactsBtn: 'Show More Facts',
                 quizHeader: 'Expanded Quiz: Test Your Animal Knowledge!',
+                startQuizBtn: 'Start Quiz',
                 nextBtn: 'Next',
+                restartQuizBtn: 'Restart Quiz',
                 shareHeader: 'Share Your Result!',
                 subscribeHeader: 'Subscribe to Weekly Facts!',
                 emailPlaceholder: 'Your email',
@@ -264,6 +181,8 @@
                 subscribeAlert: 'Subscription successful!',
                 themeToggle: 'Change Brightness',
                 spinBtn: 'Go to the second series of Super Facts',
+                yourResult: 'Your result:',
+                outOf: 'out of',
                 facts: [
                     "1. The loudest animal in the world is the 2-centimeter Pistol Shrimp, which creates a sonic boom louder than a Concorde.",
                     "2. Flamingos are born gray, and their pink color comes from a diet of shrimp and algae.",
@@ -340,7 +259,119 @@
                 ],
                 resultExcellent: 'Excellent! You are an animal expert.',
                 resultGood: 'Good, but you can do better.',
-                resultTryAgain: 'Try again!'
+                resultTryAgain: 'Try again!',
+                invalidEmail: 'Please enter your email',
+                timeout: 'Time out',
+                correct: 'Correct',
+                incorrect: 'Incorrect',
+                questionHeader: 'Question',
+                yourAnswerHeader: 'Your Answer',
+                correctAnswerHeader: 'Correct Answer',
+                statusHeader: 'Status'
+            },
+            ru: {
+                title: 'Super Facts о Животных',
+                subtitle: '60+ фактов, расширенный квиз и тесты.',
+                factsHeader: 'Интересные Факты',
+                moreFactsBtn: 'Показать больше фактов',
+                quizHeader: 'Расширенный Квиз: Проверь Знания о Животных!',
+                startQuizBtn: 'Начать Квиз',
+                nextBtn: 'Далее',
+                restartQuizBtn: 'Пройти заново',
+                shareHeader: 'Поделись результатом!',
+                subscribeHeader: 'Подпишись на еженедельные факты!',
+                emailPlaceholder: 'Ваш email',
+                subscribeBtn: 'Подписаться',
+                subscribeAlert: 'Подписка оформлена!',
+                themeToggle: 'Изменить освещенность',
+                spinBtn: 'Перейти ко второй серии Super Facts',
+                yourResult: 'Ваш результат:',
+                outOf: 'из',
+                facts: [
+                    "1. Самое громкое животное в мире — 2-сантиметровая креветка Pistol Shrimp, которая создаёт звуковой взрыв громче, чем у Конкорда.",
+                    "2. Фламинго рождаются серыми, а розовый цвет получают от диеты из креветок и водорослей.",
+                    "3. Выдры держатся за руки во сне, чтобы не уплыть друг от друга.",
+                    "4. Колибри — единственные птицы, которые могут летать назад.",
+                    "5. Дельфины используют токсичных иглобрюхов, чтобы \"накуриться\" — они выделяют наркотические токсины.",
+                    "6. Самая ядовитая змея — Inland Taipan, укус которой может убить 100 человек.",
+                    "7. Самое смертоносное животное — комар, вызывающий 725 000 смертей в год от болезней.",
+                    "8. На каждого человека приходится более 1,4 миллиарда насекомых.",
+                    "9. Подёнка имеет самую короткую взрослую жизнь — 24 часа.",
+                    "10. Рогатая ящерица стреляет кровью из глаз на 1 метр, чтобы запутать хищников.",
+                    "11. Петухи запрокидывают голову при кукареканье, чтобы защитить уши от собственного шума (свыше 100 дБ).",
+                    "12. Самый большой кальмар — более 15 метров и весом в тонну.",
+                    "13. Панголин сворачивается в бронированный шар от львов.",
+                    "14. Коалы спят до 22 часов в сутки из-за токсичной диеты из эвкалипта.",
+                    "15. Стрижи могут летать почти год без посадки.",
+                    "16. Таракан живёт недели без головы, а голова — часы без тела.",
+                    "17. Группа попугаев — пандемониум, дикобразов — колючка.",
+                    "18. Коровы производят 52 кг навоза в день (9,5 тонн в год).",
+                    "19. У садовой улитки 14 000 зубов.",
+                    "20. Язык синего кита весит как машина (2,7 тонны).",
+                    "21. Самое долгоживущее животное — черепаха, прожившая 188 лет.",
+                    "22. Гепард — самый быстрый на суше (120 км/ч).",
+                    "23. Слонята сосут хобот для комфорта, как дети большой палец.",
+                    "24. Челюсти нильского крокодила давят с силой 2268 кг/см².",
+                    "25. Аксолотли регенерируют конечности до 5 раз.",
+                    "26. Гигантский тихоокеанский осьминог имеет 3 сердца, 9 мозгов и голубую кровь.",
+                    "27. Блоха прыгает на 200 раз свою длину.",
+                    "28. Самец морского конька рожает до 2000 детёнышей.",
+                    "29. Иглобрюх содержит токсин, в 1200 раз смертоноснее цианида.",
+                    "30. Water Boatman — самое громкое животное относительно размера (99 дБ от трения гениталий).",
+                    "31. Белые медведи не белые; их бесцветная шерсть отражает свет.",
+                    "32. Девятипоясные броненосцы рожают четырёх идентичных детёнышей.",
+                    "33. Гигантская черепаха с Галапагос весит как бурый медведь — 250 кг.",
+                    "34. Рёв льва слышен за 5 км.",
+                    "35. Дикие двугорбые верблюды пьют до 400 литров воды за раз.",
+                    "36. Королевская рогатая ящерица брызжет кровью из глаз.",
+                    "37. Глаза страуса больше его мозга.",
+                    "38. Коалы спят 18-22 часа в день.",
+                    "39. Морские черепахи живут до 100 лет.",
+                    "40. Укус гризли может раздавить шар для боулинга.",
+                    "41. Какашки вомбата кубической формы.",
+                    "42. Панды рождаются розовыми и чернеют через месяц.",
+                    "43. Новорождённые жирафы весят 100 кг.",
+                    "44. Белоголовые орланы ныряют за рыбой со скоростью 160 км/ч.",
+                    "45. Фламинго розовеют от креветок.",
+                    "46. Выдры держатся за руки во сне.",
+                    "47. Комары — самые смертоносные из-за болезней.",
+                    "48. Самый большой кальмар — 15+ метров, 900 кг.",
+                    "49. Мать-осьминог погибает после вылупления яиц.",
+                    "50. У садовой улитки до 14 000 зубов.",
+                    "51. Язык синего кита — 2,7-3,6 тонны.",
+                    "52. Иглобрюх убивает 30 взрослых токсином.",
+                    "53. Запах скунса слышен за 5,6 км.",
+                    "54. Японские паукообразные крабы имеют размах ног 4 м.",
+                    "55. Клюворыл может проглотить маленького аллигатора целиком.",
+                    "56. Удар электрического угря сбивает лошадь.",
+                    "57. У пчёл 5 глаз.",
+                    "58. Взрослые кошки мяукают только людям.",
+                    "59. Крысы смеются от щекотки.",
+                    "60. Кенгуру не могут ходить назад."
+                ],
+                quizQuestions: [
+                    { question: "Какое животное спит 20 часов в сутки?", options: ["Коала", "Слон", "Кот"], correct: 0 },
+                    { question: "Фламинго рождаются розовыми?", options: ["Да", "Нет"], correct: 1 },
+                    { question: "Сколько сердец у осьминога?", options: ["1", "2", "3"], correct: 2 },
+                    { question: "Какое животное может летать назад?", options: ["Колибри", "Сова", "Орёл"], correct: 0 },
+                    { question: "Самое смертоносное животное в мире?", options: ["Комар", "Лев", "Змея"], correct: 0 },
+                    { question: "Выдры держатся за руки во сне?", options: ["Да", "Нет"], correct: 0 },
+                    { question: "Таракан может жить без головы?", options: ["Да, неделю", "Нет"], correct: 0 },
+                    { question: "Язык синего кита весит как слон?", options: ["Да", "Нет"], correct: 0 },
+                    { question: "Кенгуру могут ходить назад?", options: ["Да", "Нет"], correct: 1 },
+                    { question: "Крысы смеются от щекотки?", options: ["Да", "Нет"], correct: 0 }
+                ],
+                resultExcellent: 'Отлично! Вы эксперт по животным.',
+                resultGood: 'Хорошо, но можно лучше.',
+                resultTryAgain: 'Попробуйте снова!',
+                invalidEmail: 'Пожалуйста, введите ваш email',
+                timeout: 'Время вышло',
+                correct: 'Правильно',
+                incorrect: 'Неправильно',
+                questionHeader: 'Вопрос',
+                yourAnswerHeader: 'Ваш ответ',
+                correctAnswerHeader: 'Правильный ответ',
+                statusHeader: 'Статус'
             },
             fr: {
                 title: 'Super Facts sur les Animaux',
@@ -348,7 +379,9 @@
                 factsHeader: 'Faits Intéressants',
                 moreFactsBtn: 'Afficher Plus de Faits',
                 quizHeader: 'Quiz Étendu : Testez Vos Connaissances sur les Animaux !',
+                startQuizBtn: 'Commencer le Quiz',
                 nextBtn: 'Suivant',
+                restartQuizBtn: 'Recommencer le Quiz',
                 shareHeader: 'Partagez Votre Résultat !',
                 subscribeHeader: 'Abonnez-vous aux Faits Hebdomadaires !',
                 emailPlaceholder: 'Votre email',
@@ -356,6 +389,8 @@
                 subscribeAlert: 'Abonnement réussi !',
                 themeToggle: 'Changer Luminosité',
                 spinBtn: 'Aller à la deuxième série de Super Facts',
+                yourResult: 'Votre résultat :',
+                outOf: 'sur',
                 facts: [
                     "1. L'animal le plus bruyant au monde est la crevette Pistol Shrimp de 2 cm, qui crée un bang sonore plus fort qu'un Concorde.",
                     "2. Les flamants roses naissent gris, et leur couleur rose vient d'une alimentation de crevettes et d'algues.",
@@ -423,7 +458,7 @@
                     { question: "Les flamants roses naissent-ils roses ?", options: ["Oui", "Non"], correct: 1 },
                     { question: "Combien de cœurs a une pieuvre ?", options: ["1", "2", "3"], correct: 2 },
                     { question: "Quel animal peut voler en arrière ?", options: ["Colibri", "Chouette", "Aigle"], correct: 0 },
-                    { question: "L'animal le plus mortel au monde ?", options: ["Moustique", "Lion", "Serpent"], correct: 0 },
+                    { question: "L'animal le plus mortel au monde ?", options: ["Moustique", "Lion", "Serpente"], correct: 0 },
                     { question: "Les loutres se tiennent-elles par la main en dormant ?", options: ["Oui", "Non"], correct: 0 },
                     { question: "Un cafard peut-il vivre sans tête ?", options: ["Oui, pendant une semaine", "Non"], correct: 0 },
                     { question: "La langue d'une baleine bleue pèse-t-elle autant qu'un éléphant ?", options: ["Oui", "Non"], correct: 0 },
@@ -432,14 +467,232 @@
                 ],
                 resultExcellent: 'Excellent ! Vous êtes un expert des animaux.',
                 resultGood: 'Bien, mais vous pouvez faire mieux.',
-                resultTryAgain: 'Essayez à nouveau !'
+                resultTryAgain: 'Essayez à nouveau !',
+                invalidEmail: 'Veuillez entrer votre email',
+                timeout: 'Temps écoulé',
+                correct: 'Correct',
+                incorrect: 'Incorrect',
+                questionHeader: 'Question',
+                yourAnswerHeader: 'Votre réponse',
+                correctAnswerHeader: 'Réponse correcte',
+                statusHeader: 'Statut'
+            },
+            it: {
+                title: 'Super Fatti sugli Animali',
+                subtitle: '60+ fatti, quiz espanso e test.',
+                factsHeader: 'Fatti Interessanti',
+                moreFactsBtn: 'Mostra Più Fatti',
+                quizHeader: 'Quiz Espanso: Testa la Tua Conoscenza sugli Animali!',
+                startQuizBtn: 'Inizia Quiz',
+                nextBtn: 'Successivo',
+                restartQuizBtn: 'Ricomincia il Quiz',
+                shareHeader: 'Condividi il Tuo Risultato!',
+                subscribeHeader: 'Iscriviti ai Fatti Settimanali!',
+                emailPlaceholder: 'La tua email',
+                subscribeBtn: 'Iscriviti',
+                subscribeAlert: 'Iscrizione riuscita!',
+                themeToggle: 'Cambia Luminosità',
+                spinBtn: 'Vai alla seconda serie di Super Facts',
+                yourResult: 'Il tuo risultato:',
+                outOf: 'su',
+                facts: [
+                    "1. L'animale più rumoroso al mondo è il gamberetto Pistol Shrimp di 2 centimetri, che crea un boom sonico più forte di un Concorde.",
+                    "2. I fenicotteri nascono grigi, e il loro colore rosa deriva da una dieta di gamberetti e alghe.",
+                    "3. Le lontre si tengono per mano mentre dormono per non allontanarsi l'una dall'altra.",
+                    "4. I colibrì sono gli unici uccelli che possono volare all'indietro.",
+                    "5. I delfini usano pesci palla tossici per 'sballarsi' — rilasciano tossine narcotiche.",
+                    "6. Il serpente più velenoso è il Taipan dell'interno, il cui morso può uccidere 100 persone.",
+                    "7. L'animale più mortale è la zanzara, che causa 725.000 morti all'anno a causa di malattie.",
+                    "8. Ci sono più di 1,4 miliardi di insetti per ogni umano.",
+                    "9. Le effimere hanno la vita adulta più breve — 24 ore.",
+                    "10. Le lucertole cornute sparano sangue dagli occhi fino a 1 metro per confondere i predatori.",
+                    "11. I galli gettano la testa all'indietro quando cantano per proteggere le loro orecchie dal proprio rumore (oltre 100 dB).",
+                    "12. Il calamaro più grande è oltre 15 metri e pesa una tonnellata.",
+                    "13. I pangolini si arrotolano in una palla corazzata contro i leoni.",
+                    "14. I koala dormono fino a 22 ore al giorno a causa di una dieta tossica di eucalipto.",
+                    "15. I rondoni possono volare per quasi un anno senza atterrare.",
+                    "16. Gli scarafaggi vivono settimane senza testa, e la testa ore senza il corpo.",
+                    "17. Un gruppo di pappagalli è un pandemonio, di porcospini — una prickle.",
+                    "18. Le mucche producono 52 kg di letame al giorno (9,5 tonnellate all'anno).",
+                    "19. Le lumache da giardino hanno 14.000 denti.",
+                    "20. La lingua di una balena blu pesa quanto un'auto (2,7 tonnellate).",
+                    "21. L'animale più longevo è una tartaruga che ha vissuto 188 anni.",
+                    "22. I ghepardi sono i più veloci sulla terra (120 km/h).",
+                    "23. I cuccioli di elefante succhiano la loro proboscide per conforto, come i bambini succhiano il pollice.",
+                    "24. Le mascelle del coccodrillo del Nilo schiacciano con una forza di 2.268 kg/cm².",
+                    "25. Gli axolotl rigenerano gli arti fino a 5 volte.",
+                    "26. Il polpo gigante del Pacifico ha 3 cuori, 9 cervelli e sangue blu.",
+                    "27. Le pulci saltano 200 volte la loro lunghezza.",
+                    "28. I maschi di cavallucci marini danno alla luce fino a 2.000 piccoli.",
+                    "29. I pesci palla contengono una tossina 1.200 volte più mortale del cianuro.",
+                    "30. Il Water Boatman è l'animale più rumoroso relativo alla dimensione (99 dB dal sfregamento dei genitali).",
+                    "31. Gli orsi polari non sono bianchi; la loro pelliccia incolore riflette la luce.",
+                    "32. Gli armadilli a nove bande danno alla luce quattro piccoli identici.",
+                    "33. La tartaruga gigante delle Galapagos pesa come un orso bruno — 250 kg.",
+                    "34. Il ruggito di un leone si sente a 5 km di distanza.",
+                    "35. I cammelli battriani selvatici bevono fino a 400 litri d'acqua in una volta.",
+                    "36. La lucertola cornuta reale schizza sangue dagli occhi.",
+                    "37. Gli occhi dello struzzo sono più grandi del suo cervello.",
+                    "38. I koala dormono 18-22 ore al giorno.",
+                    "39. Le tartarughe marine vivono fino a 100 anni.",
+                    "40. Il morso di un grizzly può schiacciare una palla da bowling.",
+                    "41. Le feci del wombat sono a forma di cubo.",
+                    "42. I panda nascono rosa e diventano neri dopo un mese.",
+                    "43. Le giraffe appena nate pesano 100 kg.",
+                    "44. Le aquile calve si tuffano per i pesci a 160 km/h.",
+                    "45. I fenicotteri diventano rosa dai gamberetti.",
+                    "46. Le lontre si tengono per mano mentre dormono.",
+                    "47. Le zanzare sono le più mortali a causa delle malattie.",
+                    "48. Il calamaro più grande è 15+ metri, 900 kg.",
+                    "49. La madre polpo muore dopo la schiusa delle uova.",
+                    "50. Le lumache da giardino hanno fino a 14.000 denti.",
+                    "51. La lingua della balena blu è 2,7-3,6 tonnellate.",
+                    "52. Il pesce palla uccide 30 adulti con la tossina.",
+                    "53. L'odore della moffetta si sente a 5,6 km di distanza.",
+                    "54. I granchi ragno giapponesi hanno un'apertura delle gambe di 4 m.",
+                    "55. Il drago di Komodo può ingoiare un piccolo alligatore intero.",
+                    "56. La scossa dell'anguilla elettrica può abbattere un cavallo.",
+                    "57. Le api hanno 5 occhi.",
+                    "58. I gatti adulti miagolano solo agli umani.",
+                    "59. I ratti ridono quando vengono solleticati.",
+                    "60. I canguri non possono camminare all'indietro."
+                ],
+                quizQuestions: [
+                    { question: "Quale animale dorme 20 ore al giorno?", options: ["Koala", "Elefante", "Gatto"], correct: 0 },
+                    { question: "I fenicotteri nascono rosa?", options: ["Sì", "No"], correct: 1 },
+                    { question: "Quanti cuori ha un polpo?", options: ["1", "2", "3"], correct: 2 },
+                    { question: "Quale animale può volare all'indietro?", options: ["Colibrì", "Gufo", "Aquila"], correct: 0 },
+                    { question: "L'animale più mortale al mondo?", options: ["Zanzara", "Leone", "Serpente"], correct: 0 },
+                    { question: "Le lontre si tengono per mano mentre dormono?", options: ["Sì", "No"], correct: 0 },
+                    { question: "Uno scarafaggio può vivere senza testa?", options: ["Sì, per una settimana", "No"], correct: 0 },
+                    { question: "La lingua di una balena blu pesa quanto un elefante?", options: ["Sì", "No"], correct: 0 },
+                    { question: "I canguri possono camminare all'indietro?", options: ["Sì", "No"], correct: 1 },
+                    { question: "I ratti ridono quando vengono solleticati?", options: ["Sì", "No"], correct: 0 }
+                ],
+                resultExcellent: 'Eccellente! Sei un esperto di animali.',
+                resultGood: 'Bene, ma puoi fare meglio.',
+                resultTryAgain: 'Riprova!',
+                invalidEmail: 'Inserisci la tua email',
+                timeout: 'Tempo scaduto',
+                correct: 'Corretto',
+                incorrect: 'Sbagliato',
+                questionHeader: 'Domanda',
+                yourAnswerHeader: 'Tua risposta',
+                correctAnswerHeader: 'Risposta corretta',
+                statusHeader: 'Stato'
+            },
+            es: {
+                title: 'Super Datos sobre Animales',
+                subtitle: 'Más de 60 datos, cuestionario ampliado y pruebas.',
+                factsHeader: 'Datos Interesantes',
+                moreFactsBtn: 'Mostrar Más Datos',
+                quizHeader: 'Cuestionario Ampliado: ¡Pon a Prueba tu Conocimiento sobre Animales!',
+                startQuizBtn: 'Iniciar Cuestionario',
+                nextBtn: 'Siguiente',
+                restartQuizBtn: 'Reiniciar Cuestionario',
+                shareHeader: '¡Comparte tu Resultado!',
+                subscribeHeader: '¡Suscríbete a Datos Semanales!',
+                emailPlaceholder: 'Tu correo electrónico',
+                subscribeBtn: 'Suscribirse',
+                subscribeAlert: '¡Suscripción exitosa!',
+                themeToggle: 'Cambiar Brillo',
+                spinBtn: 'Ir a la segunda serie de Super Datos',
+                yourResult: 'Tu resultado:',
+                outOf: 'de',
+                facts: [
+                    "1. El animal más ruidoso del mundo es el camarón pistola de 2 cm, que crea un estallido sónico más fuerte que un Concorde.",
+                    "2. Los flamencos nacen grises, y su color rosa proviene de una dieta de camarones y algas.",
+                    "3. Las nutrias se toman de la mano mientras duermen para no alejarse unas de otras.",
+                    "4. Los colibríes son las únicas aves que pueden volar hacia atrás.",
+                    "5. Los delfines usan peces globo tóxicos para 'colocarse' — liberan toxinas narcóticas.",
+                    "6. La serpiente más venenosa es el Taipán del interior, cuya mordida puede matar a 100 personas.",
+                    "7. El animal más mortal es el mosquito, que causa 725,000 muertes al año por enfermedades.",
+                    "8. Hay más de 1.4 mil millones de insectos por cada humano.",
+                    "9. Las efímeras tienen la vida adulta más corta — 24 horas.",
+                    "10. Los lagartos cornudos disparan sangre de sus ojos hasta 1 metro para confundir a los depredadores.",
+                    "11. Los gallos echan la cabeza hacia atrás al cantar para proteger sus oídos de su propio ruido (más de 100 dB).",
+                    "12. El calamar más grande mide más de 15 metros y pesa una tonelada.",
+                    "13. Los pangolines se enrollan en una bola blindada contra los leones.",
+                    "14. Los koalas duermen hasta 22 horas al día debido a una dieta tóxica de eucalipto.",
+                    "15. Los vencejos pueden volar casi un año sin aterrizar.",
+                    "16. Las cucarachas viven semanas sin cabeza, y la cabeza horas sin el cuerpo.",
+                    "17. Un grupo de loros es un pandemónium, de puercoespines — una púa.",
+                    "18. Las vacas producen 52 kg de estiércol al día (9.5 toneladas al año).",
+                    "19. Los caracoles de jardín tienen 14,000 dientes.",
+                    "20. La lengua de una ballena azul pesa tanto como un coche (2.7 toneladas).",
+                    "21. El animal más longevo es una tortuga que vivió 188 años.",
+                    "22. Los guepardos son los más rápidos en tierra (120 km/h).",
+                    "23. Las crías de elefante chupan su trompa para consolarse, como los niños chupan su pulgar.",
+                    "24. Las mandíbulas del cocodrilo del Nilo aplastan con una fuerza de 2,268 kg/cm².",
+                    "25. Los ajolotes regeneran extremidades hasta 5 veces.",
+                    "26. El pulpo gigante del Pacífico tiene 3 corazones, 9 cerebros y sangre azul.",
+                    "27. Las pulgas saltan 200 veces su longitud.",
+                    "28. Los machos de caballito de mar dan a luz hasta 2,000 crías.",
+                    "29. Los peces globo contienen una toxina 1,200 veces más mortal que el cianuro.",
+                    "30. El chinche de agua es el animal más ruidoso en relación con su tamaño (99 dB al frotar los genitales).",
+                    "31. Los osos polares no son blancos; su pelaje incoloro refleja la luz.",
+                    "32. Los armadillos de nueve bandas dan a luz a cuatro crías idénticas.",
+                    "33. La tortuga gigante de Galápagos pesa como un oso pardo — 250 kg.",
+                    "34. El rugido de un león se escucha a 5 km de distancia.",
+                    "35. Los camellos bactrianos salvajes beben hasta 400 litros de agua de una vez.",
+                    "36. El lagarto cornudo real dispara sangre de sus ojos.",
+                    "37. Los ojos del avestruz son más grandes que su cerebro.",
+                    "38. Los koalas duermen de 18 a 22 horas al día.",
+                    "39. Las tortugas marinas viven hasta 100 años.",
+                    "40. La mordida de un oso grizzly puede aplastar una bola de bolos.",
+                    "41. Las heces del wombat tienen forma de cubo.",
+                    "42. Los pandas nacen rosados y se vuelven negros después de un mes.",
+                    "43. Las jirafas recién nacidas pesan 100 kg.",
+                    "44. Las águilas calvas se lanzan por peces a 160 km/h.",
+                    "45. Los flamencos se vuelven rosados por los camarones.",
+                    "46. Las nutrias se toman de la mano mientras duermen.",
+                    "47. Los mosquitos son los más mortales debido a las enfermedades.",
+                    "48. El calamar más grande mide más de 15 metros, 900 kg.",
+                    "49. La madre pulpo muere después de que los huevos eclosionan.",
+                    "50. Los caracoles de jardín tienen hasta 14,000 dientes.",
+                    "51. La lengua de la ballena azul pesa de 2.7 a 3.6 toneladas.",
+                    "52. El pez globo mata a 30 adultos con su toxina.",
+                    "53. El olor del zorrillo se percibe a 5.6 km de distancia.",
+                    "54. Los cangrejos araña japoneses tienen una envergadura de patas de 4 m.",
+                    "55. El dragón de Komodo puede tragar un pequeño caimán entero.",
+                    "56. La descarga de la anguila eléctrica puede derribar un caballo.",
+                    "57. Las abejas tienen 5 ojos.",
+                    "58. Los gatos adultos solo maúllan a los humanos.",
+                    "59. Las ratas ríen cuando se les hace cosquillas.",
+                    "60. Los canguros no pueden caminar hacia atrás."
+                ],
+                quizQuestions: [
+                    { question: "¿Qué animal duerme 20 horas al día?", options: ["Koala", "Elefante", "Gato"], correct: 0 },
+                    { question: "¿Los flamencos nacen rosados?", options: ["Sí", "No"], correct: 1 },
+                    { question: "¿Cuántos corazones tiene un pulpo?", options: ["1", "2", "3"], correct: 2 },
+                    { question: "¿Qué animal puede volar hacia atrás?", options: ["Colibrí", "Búho", "Águila"], correct: 0 },
+                    { question: "¿El animal más mortal del mundo?", options: ["Mosquito", "León", "Serpiente"], correct: 0 },
+                    { question: "¿Las nutrias se toman de la mano mientras duermen?", options: ["Sí", "No"], correct: 0 },
+                    { question: "¿Puede una cucaracha vivir sin cabeza?", options: ["Sí, durante una semana", "No"], correct: 0 },
+                    { question: "¿La lengua de una ballena azul pesa tanto como un elefante?", options: ["Sí", "No"], correct: 0 },
+                    { question: "¿Pueden los canguros caminar hacia atrás?", options: ["Sí", "No"], correct: 1 },
+                    { question: "¿Las ratas ríen cuando se les hace cosquillas?", options: ["Sí", "No"], correct: 0 }
+                ],
+                resultExcellent: '¡Excelente! Eres un experto en animales.',
+                resultGood: 'Bien, pero puedes hacerlo mejor.',
+                resultTryAgain: '¡Inténtalo de nuevo!',
+                invalidEmail: 'Por favor, introduce tu correo electrónico',
+                timeout: 'Tiempo agotado',
+                correct: 'Correcto',
+                incorrect: 'Incorrecto',
+                questionHeader: 'Pregunta',
+                yourAnswerHeader: 'Tu respuesta',
+                correctAnswerHeader: 'Respuesta correcta',
+                statusHeader: 'Estado'
             }
         };
 
-        let currentLang = 'ru';
+        let currentLang = 'en';
         let currentQuestion = 0;
         let score = 0;
         let shownFacts = 10;
+        let answers = [];
+        let timerInterval;
 
         function changeLanguage(lang) {
             currentLang = lang;
@@ -454,10 +707,32 @@
                 }
             });
             loadFacts();
+            resetQuiz();
+            updateThemeButton();
+        }
+
+        function resetQuiz() {
             currentQuestion = 0;
             score = 0;
+            answers = [];
+            document.getElementById('start-quiz-btn').style.display = 'block';
+            document.getElementById('quiz-progress').style.display = 'none';
+            document.getElementById('quiz-question').style.display = 'none';
+            document.getElementById('quiz-timer').style.display = 'none';
+            document.getElementById('quiz-options').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('quiz-result').style.display = 'none';
+        }
+
+        function startQuiz() {
+            document.getElementById('start-quiz-btn').style.display = 'none';
+            document.getElementById('quiz-progress').style.display = 'block';
             loadQuestion();
-            updateThemeButton();
+        }
+
+        function restartQuiz() {
+            resetQuiz();
+            startQuiz();
         }
 
         function loadFacts() {
@@ -474,37 +749,73 @@
         }
 
         function showMoreFacts() {
+            const oldShown = shownFacts;
             shownFacts = Math.min(shownFacts + 10, translations[currentLang].facts.length);
-            loadFacts();
+            const grid = document.getElementById('factGrid');
+            const newFacts = translations[currentLang].facts.slice(oldShown, shownFacts);
+            newFacts.forEach((fact, index) => {
+                const factDiv = document.createElement('div');
+                factDiv.classList.add('fact');
+                factDiv.style.animationDelay = `${index * 0.05}s`;
+                factDiv.textContent = fact;
+                grid.appendChild(factDiv);
+            });
             if (shownFacts >= translations[currentLang].facts.length) {
                 document.querySelector('#facts button').style.display = 'none';
             }
         }
 
         function loadQuestion() {
+            clearInterval(timerInterval);
             const q = translations[currentLang].quizQuestions[currentQuestion];
             document.getElementById('quiz-question').textContent = q.question;
+            document.getElementById('quiz-question').style.display = 'block';
             const optionsDiv = document.getElementById('quiz-options');
             optionsDiv.innerHTML = '';
             q.options.forEach((opt, idx) => {
                 const optDiv = document.createElement('div');
                 optDiv.classList.add('quiz-option');
                 optDiv.textContent = opt;
-                optDiv.onclick = () => selectOption(idx);
+                optDiv.onclick = () => selectOption(idx, q);
                 optionsDiv.appendChild(optDiv);
             });
+            optionsDiv.style.display = 'flex';
             document.getElementById('next-btn').style.display = 'none';
             updateProgress();
             document.getElementById('quiz-result').style.display = 'none';
-            document.getElementById('quiz-question').style.display = 'block';
-            document.getElementById('quiz-options').style.display = 'flex';
+            document.getElementById('quiz-timer').style.display = 'block';
+
+            let timeLeft = 10;
+            document.getElementById('quiz-timer').textContent = timeLeft;
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('quiz-timer').textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    answers.push({
+                        question: q.question,
+                        userChoice: translations[currentLang].timeout,
+                        correctChoice: q.options[q.correct],
+                        isCorrect: false
+                    });
+                    nextQuestion();
+                }
+            }, 1000);
         }
 
-        function selectOption(idx) {
+        function selectOption(idx, q) {
+            clearInterval(timerInterval);
             const options = document.querySelectorAll('.quiz-option');
             options.forEach(opt => opt.classList.remove('selected'));
             options[idx].classList.add('selected');
-            if (idx === translations[currentLang].quizQuestions[currentQuestion].correct) score++;
+            const isCorrect = idx === q.correct;
+            if (isCorrect) score++;
+            answers.push({
+                question: q.question,
+                userChoice: q.options[idx],
+                correctChoice: q.options[q.correct],
+                isCorrect: isCorrect
+            });
             document.getElementById('next-btn').style.display = 'block';
         }
 
@@ -525,6 +836,7 @@
         function showResult() {
             document.getElementById('quiz-question').style.display = 'none';
             document.getElementById('quiz-options').style.display = 'none';
+            document.getElementById('quiz-timer').style.display = 'none';
             document.getElementById('next-btn').style.display = 'none';
             const resultDiv = document.getElementById('quiz-result');
             resultDiv.style.display = 'block';
@@ -532,18 +844,29 @@
             if (score > 7) message = translations[currentLang].resultExcellent;
             else if (score > 4) message = translations[currentLang].resultGood;
             else message = translations[currentLang].resultTryAgain;
-            resultDiv.innerHTML = `<h3>Ваш результат: ${score} из ${translations[currentLang].quizQuestions.length}</h3><p>${message}</p>`;
+
+            let tableHtml = `<table><thead><tr><th>${translations[currentLang].questionHeader}</th><th>${translations[currentLang].yourAnswerHeader}</th><th>${translations[currentLang].correctAnswerHeader}</th><th>${translations[currentLang].statusHeader}</th></tr></thead><tbody>`;
+            answers.forEach(ans => {
+                tableHtml += `<tr><td>${ans.question}</td><td>${ans.userChoice}</td><td>${ans.correctChoice}</td><td>${ans.isCorrect ? translations[currentLang].correct : translations[currentLang].incorrect}</td></tr>`;
+            });
+            tableHtml += '</tbody></table>';
+
+            resultDiv.innerHTML = `<h3>${translations[currentLang].yourResult} ${score} ${translations[currentLang].outOf} ${translations[currentLang].quizQuestions.length}</h3><p>${message}</p>${tableHtml}<button onclick="restartQuiz()" data-key="restartQuizBtn">Restart Quiz</button>`;
         }
 
         function shareOnSocial(network) {
-            let shareText = `Я набрал ${score} в квизе о животных на Super Facts!`; // Default to Russian
-            if (currentLang === 'en') {
-                shareText = `I scored ${score} in the animal quiz on Super Facts!`;
+            let shareText = `I scored ${score} in the animal quiz on Super Facts!`;
+            if (currentLang === 'ru') {
+                shareText = `Я набрал ${score} в квизе о животных на Super Facts!`;
             } else if (currentLang === 'fr') {
                 shareText = `J'ai marqué ${score} au quiz sur les animaux sur Super Facts !`;
+            } else if (currentLang === 'it') {
+                shareText = `Ho ottenuto ${score} nel quiz sugli animali su Super Facts!`;
+            } else if (currentLang === 'es') {
+                shareText = `¡Obtuve ${score} en el cuestionario de animales en Super Datos!`;
             }
             const encodedShareText = encodeURIComponent(shareText);
-            const shareUrl = encodeURIComponent(window.location.href); // Use current page URL
+            const shareUrl = encodeURIComponent(window.location.href);
             let url;
             if (network === 'WhatsApp') {
                 url = `https://api.whatsapp.com/send?text=${encodedShareText}%20${shareUrl}`;
@@ -556,7 +879,16 @@
         }
 
         function subscribe() {
-            alert(translations[currentLang].subscribeAlert);
+            const emailInput = document.getElementById('subscribe-email');
+            const email = emailInput.value.trim();
+            if (email) {
+                const subject = encodeURIComponent(currentLang === 'es' ? 'Solicitud de suscripción' : 'Subscription Request');
+                const body = encodeURIComponent(`Please subscribe me to weekly facts: ${email}`);
+                window.location.href = `mailto:info@superfacts.fr?subject=${subject}&body=${body}`;
+                alert(translations[currentLang].subscribeAlert);
+            } else {
+                alert(translations[currentLang].invalidEmail);
+            }
         }
 
         function updateThemeButton() {
@@ -571,9 +903,8 @@
             updateThemeButton();
         });
 
-        // Инициализация
-        changeLanguage('ru');
+        // Initialization
+        changeLanguage('en');
     </script>
 </body>
 </html>
-```
